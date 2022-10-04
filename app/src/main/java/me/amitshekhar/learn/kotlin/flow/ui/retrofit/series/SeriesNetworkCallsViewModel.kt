@@ -34,7 +34,7 @@ class SeriesNetworkCallsViewModel(
                     allUsersFromApi.addAll(usersFromApi)
                     apiHelper.getMoreUsers()
                 }
-                .flowOn(Dispatchers.Default)
+                .flowOn(Dispatchers.IO)
                 .catch { e ->
                     users.postValue(Resource.error(e.toString(), null))
                 }

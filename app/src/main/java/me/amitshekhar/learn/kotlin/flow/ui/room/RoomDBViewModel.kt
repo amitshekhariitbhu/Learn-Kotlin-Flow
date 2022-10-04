@@ -55,7 +55,7 @@ class RoomDBViewModel(private val apiHelper: ApiHelper, private val dbHelper: Da
                         }
                     }
                 }
-                .flowOn(Dispatchers.Default)
+                .flowOn(Dispatchers.IO)
                 .catch { e ->
                     users.postValue(Resource.error(e.toString(), null))
                 }

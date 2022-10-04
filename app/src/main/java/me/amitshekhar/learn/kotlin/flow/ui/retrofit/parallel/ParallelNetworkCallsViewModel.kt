@@ -35,7 +35,7 @@ class ParallelNetworkCallsViewModel(
                     allUsersFromApi.addAll(moreUsersFromApi)
                     return@zip allUsersFromApi
                 }
-                .flowOn(Dispatchers.Default)
+                .flowOn(Dispatchers.IO)
                 .catch { e ->
                     users.postValue(Resource.error(e.toString(), null))
                 }
