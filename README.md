@@ -150,8 +150,8 @@ Now we have understood what exactly Flow is.
 ## Kotlin Flow Examples for Android Development: Activity and ViewModel
 
 * **Single Network Call:** Learn how to make a network call using Kotlin Flow. This is a very simple
-  use-case in Android App
-  Development. [Retrofit with Kotlin Flow](https://amitshekhar.me/blog/retrofit-with-kotlin-flow)
+  use-case in Android App Development.
+  Blog: [Retrofit with Kotlin Flow](https://amitshekhar.me/blog/retrofit-with-kotlin-flow)
     * [Activity Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/retrofit/single/SingleNetworkCallActivity.kt)
     * [ViewModel Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/retrofit/single/SingleNetworkCallViewModel.kt)
 
@@ -166,8 +166,8 @@ Now we have understood what exactly Flow is.
     * [ViewModel Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/retrofit/parallel/ParallelNetworkCallsViewModel.kt)
 
 * **Room Database Operation:** Learn how to fetch or insert entity in database using Kotlin Flow.
-  This is useful when you are using Room Database in your Android
-  Application. [Blog](https://amitshekhar.me/blog/room-database-with-kotlin-flow)
+  This is useful when you are using Room Database in your Android Application.
+  Blog: [Room Database with Kotlin Flow](https://amitshekhar.me/blog/room-database-with-kotlin-flow)
     * [Activity Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/room/RoomDBActivity.kt)
     * [ViewModel Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/room/RoomDBViewModel.kt)
 
