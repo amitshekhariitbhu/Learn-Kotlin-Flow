@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import kotlinx.android.synthetic.main.activity_long_running_task.*
 import kotlinx.android.synthetic.main.activity_recycler_view.progressBar
+import kotlinx.coroutines.launch
 import me.amitshekhar.learn.kotlin.flow.R
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelperImpl
 import me.amitshekhar.learn.kotlin.flow.data.api.RetrofitBuilder
@@ -28,24 +29,26 @@ class FilterActivity : AppCompatActivity() {
     }
 
     private fun setupLongRunningTask() {
-        viewModel.getStatus().observe(this, Observer {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    progressBar.visibility = View.GONE
-                    textView.text = it.data
-                    textView.visibility = View.VISIBLE
-                }
-                Status.LOADING -> {
-                    progressBar.visibility = View.VISIBLE
-                    textView.visibility = View.GONE
-                }
-                Status.ERROR -> {
-                    //Handle Error
-                    progressBar.visibility = View.GONE
-                    Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+        lifecycleScope.launch {
+            viewModel.status.collect {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        progressBar.visibility = View.GONE
+                        textView.text = it.data
+                        textView.visibility = View.VISIBLE
+                    }
+                    Status.LOADING -> {
+                        progressBar.visibility = View.VISIBLE
+                        textView.visibility = View.GONE
+                    }
+                    Status.ERROR -> {
+                        //Handle Error
+                        progressBar.visibility = View.GONE
+                        Toast.makeText(this@FilterActivity, it.message, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
-        })
+        }
         viewModel.startFilterTask()
     }
 

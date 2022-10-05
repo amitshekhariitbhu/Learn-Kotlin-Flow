@@ -1,13 +1,9 @@
 package me.amitshekhar.learn.kotlin.flow.ui.retrofit.parallel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.zip
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelper
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelper
@@ -19,7 +15,9 @@ class ParallelNetworkCallsViewModel(
     private val dbHelper: DatabaseHelper
 ) : ViewModel() {
 
-    private val users = MutableLiveData<Resource<List<ApiUser>>>()
+    private val _users = MutableStateFlow<Resource<List<ApiUser>>>(Resource.loading())
+
+    val users: StateFlow<Resource<List<ApiUser>>> = _users
 
     init {
         fetchUsers()
@@ -27,7 +25,7 @@ class ParallelNetworkCallsViewModel(
 
     private fun fetchUsers() {
         viewModelScope.launch {
-            users.postValue(Resource.loading(null))
+            _users.value = Resource.loading()
             apiHelper.getUsers()
                 .zip(apiHelper.getMoreUsers()) { usersFromApi, moreUsersFromApi ->
                     val allUsersFromApi = mutableListOf<ApiUser>()
@@ -37,16 +35,12 @@ class ParallelNetworkCallsViewModel(
                 }
                 .flowOn(Dispatchers.IO)
                 .catch { e ->
-                    users.postValue(Resource.error(e.toString(), null))
+                    _users.value = Resource.error(e.toString())
                 }
                 .collect {
-                    users.postValue(Resource.success(it))
+                    _users.value = Resource.success(it)
                 }
         }
-    }
-
-    fun getUsers(): LiveData<Resource<List<ApiUser>>> {
-        return users
     }
 
 }

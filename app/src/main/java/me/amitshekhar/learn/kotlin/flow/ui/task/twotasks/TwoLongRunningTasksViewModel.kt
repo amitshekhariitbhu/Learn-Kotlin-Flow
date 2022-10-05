@@ -1,7 +1,5 @@
 package me.amitshekhar.learn.kotlin.flow.ui.task.twotasks
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -17,28 +15,27 @@ class TwoLongRunningTasksViewModel(
     private val dbHelper: DatabaseHelper
 ) : ViewModel() {
 
-    private val status = MutableLiveData<Resource<String>>()
+    private val _status = MutableStateFlow<Resource<String>>(Resource.loading())
+
+    val status: StateFlow<Resource<String>> = _status
 
     fun startLongRunningTask() {
         viewModelScope.launch {
-            status.postValue(Resource.loading(null))
+            _status.value = Resource.loading()
             doLongRunningTaskOne()
                 .zip(doLongRunningTaskTwo()) { resultOne, resultTwo ->
                     return@zip resultOne + resultTwo
                 }
                 .flowOn(Dispatchers.Default)
                 .catch { e ->
-                    status.postValue(Resource.error(e.toString(), null))
+                    _status.value = Resource.error(e.toString())
                 }
                 .collect {
-                    status.postValue(Resource.success(it))
+                    _status.value = Resource.success(it)
                 }
         }
     }
 
-    fun getStatus(): LiveData<Resource<String>> {
-        return status
-    }
 
     private fun doLongRunningTaskTwo(): Flow<String> {
         return flow {

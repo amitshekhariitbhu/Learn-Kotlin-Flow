@@ -1,13 +1,9 @@
 package me.amitshekhar.learn.kotlin.flow.ui.retrofit.series
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flatMapConcat
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelper
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelper
@@ -19,7 +15,9 @@ class SeriesNetworkCallsViewModel(
     private val dbHelper: DatabaseHelper
 ) : ViewModel() {
 
-    private val users = MutableLiveData<Resource<List<ApiUser>>>()
+    private val _users = MutableStateFlow<Resource<List<ApiUser>>>(Resource.loading())
+
+    val users: StateFlow<Resource<List<ApiUser>>> = _users
 
     init {
         fetchUsers()
@@ -27,7 +25,7 @@ class SeriesNetworkCallsViewModel(
 
     private fun fetchUsers() {
         viewModelScope.launch {
-            users.postValue(Resource.loading(null))
+            _users.value = Resource.loading()
             val allUsersFromApi = mutableListOf<ApiUser>()
             apiHelper.getUsers()
                 .flatMapConcat { usersFromApi ->
@@ -36,17 +34,14 @@ class SeriesNetworkCallsViewModel(
                 }
                 .flowOn(Dispatchers.IO)
                 .catch { e ->
-                    users.postValue(Resource.error(e.toString(), null))
+                    _users.value = Resource.error(e.toString())
                 }
                 .collect { moreUsersFromApi ->
                     allUsersFromApi.addAll(moreUsersFromApi)
-                    users.postValue(Resource.success(allUsersFromApi))
+                    _users.value = Resource.success(allUsersFromApi)
                 }
         }
     }
 
-    fun getUsers(): LiveData<Resource<List<ApiUser>>> {
-        return users
-    }
 
 }

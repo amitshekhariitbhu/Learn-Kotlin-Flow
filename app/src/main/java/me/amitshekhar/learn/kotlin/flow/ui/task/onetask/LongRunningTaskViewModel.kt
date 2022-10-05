@@ -1,15 +1,10 @@
 package me.amitshekhar.learn.kotlin.flow.ui.task.onetask
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelper
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelper
@@ -20,25 +15,23 @@ class LongRunningTaskViewModel(
     private val dbHelper: DatabaseHelper
 ) : ViewModel() {
 
-    private val status = MutableLiveData<Resource<String>>()
+    private val _status = MutableStateFlow<Resource<String>>(Resource.loading())
+
+    val status: StateFlow<Resource<String>> = _status
 
     fun startLongRunningTask() {
         viewModelScope.launch {
-            status.postValue(Resource.loading(null))
+            _status.value = Resource.loading()
             // do a long running task
             doLongRunningTask()
                 .flowOn(Dispatchers.Default)
                 .catch {
-                    status.postValue(Resource.error("Something Went Wrong", null))
+                    _status.value = Resource.error("Something Went Wrong")
                 }
                 .collect {
-                    status.postValue(Resource.success("Task Completed"))
+                    _status.value = Resource.success("Task Completed")
                 }
         }
-    }
-
-    fun getStatus(): LiveData<Resource<String>> {
-        return status
     }
 
     private fun doLongRunningTask(): Flow<Int> {

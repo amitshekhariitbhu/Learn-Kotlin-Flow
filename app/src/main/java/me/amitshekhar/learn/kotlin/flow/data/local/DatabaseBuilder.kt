@@ -10,7 +10,9 @@ object DatabaseBuilder {
     fun getInstance(context: Context): AppDatabase {
         if (INSTANCE == null) {
             synchronized(AppDatabase::class) {
-                INSTANCE = buildRoomDB(context)
+                if (INSTANCE == null) {
+                    INSTANCE = buildRoomDB(context)
+                }
             }
         }
         return INSTANCE!!

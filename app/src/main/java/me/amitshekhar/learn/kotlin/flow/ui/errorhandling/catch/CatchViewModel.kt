@@ -1,9 +1,9 @@
 package me.amitshekhar.learn.kotlin.flow.ui.errorhandling.catch
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelper
@@ -16,7 +16,9 @@ class CatchViewModel(
     private val dbHelper: DatabaseHelper
 ) : ViewModel() {
 
-    private val users = MutableLiveData<Resource<List<ApiUser>>>()
+    private val _users = MutableStateFlow<Resource<List<ApiUser>>>(Resource.loading())
+
+    val users: StateFlow<Resource<List<ApiUser>>> = _users
 
     init {
         fetchUsers()
@@ -24,19 +26,15 @@ class CatchViewModel(
 
     private fun fetchUsers() {
         viewModelScope.launch {
-            users.postValue(Resource.loading(null))
+            _users.value = Resource.loading()
             apiHelper.getUsersWithError()
                 .catch { e ->
-                    users.postValue(Resource.error(e.toString(), null))
+                    _users.value = Resource.error(e.toString())
                 }
                 .collect {
-                    users.postValue(Resource.success(it))
+                    _users.value = Resource.success(it)
                 }
         }
-    }
-
-    fun getUsers(): LiveData<Resource<List<ApiUser>>> {
-        return users
     }
 
 }

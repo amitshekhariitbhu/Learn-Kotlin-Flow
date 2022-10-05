@@ -1,7 +1,5 @@
 package me.amitshekhar.learn.kotlin.flow.ui.retryexponentialbackoff
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -18,11 +16,13 @@ class RetryExponentialBackoffModel(
     dbHelper: DatabaseHelper
 ) : ViewModel() {
 
-    private val status = MutableLiveData<Resource<String>>()
+    private val _status = MutableStateFlow<Resource<String>>(Resource.loading())
+
+    val status: StateFlow<Resource<String>> = _status
 
     fun startTask() {
         viewModelScope.launch {
-            status.postValue(Resource.loading(null))
+            _status.value = Resource.loading()
             // do a long running task
             var currentDelay = 1000L
             val delayFactor = 2
@@ -38,16 +38,12 @@ class RetryExponentialBackoffModel(
                     }
                 }
                 .catch {
-                    status.postValue(Resource.error("Something Went Wrong", null))
+                    _status.value = Resource.error("Something Went Wrong")
                 }
                 .collect {
-                    status.postValue(Resource.success("Task Completed"))
+                    _status.value = Resource.success("Task Completed")
                 }
         }
-    }
-
-    fun getStatus(): LiveData<Resource<String>> {
-        return status
     }
 
     private fun doLongRunningTask(): Flow<Int> {

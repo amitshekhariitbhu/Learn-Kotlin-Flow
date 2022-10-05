@@ -5,11 +5,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_recycler_view.*
+import kotlinx.coroutines.launch
 import me.amitshekhar.learn.kotlin.flow.R
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelperImpl
 import me.amitshekhar.learn.kotlin.flow.data.api.RetrofitBuilder
@@ -49,24 +50,26 @@ class MapActivity : AppCompatActivity() {
     }
 
     private fun setupObserver() {
-        viewModel.getUsers().observe(this, Observer {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    progressBar.visibility = View.GONE
-                    it.data?.let { users -> renderList(users) }
-                    recyclerView.visibility = View.VISIBLE
-                }
-                Status.LOADING -> {
-                    progressBar.visibility = View.VISIBLE
-                    recyclerView.visibility = View.GONE
-                }
-                Status.ERROR -> {
-                    //Handle Error
-                    progressBar.visibility = View.GONE
-                    Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+        lifecycleScope.launch {
+            viewModel.users.collect {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        progressBar.visibility = View.GONE
+                        it.data?.let { users -> renderList(users) }
+                        recyclerView.visibility = View.VISIBLE
+                    }
+                    Status.LOADING -> {
+                        progressBar.visibility = View.VISIBLE
+                        recyclerView.visibility = View.GONE
+                    }
+                    Status.ERROR -> {
+                        //Handle Error
+                        progressBar.visibility = View.GONE
+                        Toast.makeText(this@MapActivity, it.message, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
-        })
+        }
     }
 
     private fun renderList(users: List<User>) {

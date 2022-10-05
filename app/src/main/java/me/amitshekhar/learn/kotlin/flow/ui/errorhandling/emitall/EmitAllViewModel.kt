@@ -1,7 +1,5 @@
 package me.amitshekhar.learn.kotlin.flow.ui.errorhandling.emitall
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +15,9 @@ class EmitAllViewModel(
     private val dbHelper: DatabaseHelper
 ) : ViewModel() {
 
-    private val users = MutableLiveData<Resource<List<ApiUser>>>()
+    private val _users = MutableStateFlow<Resource<List<ApiUser>>>(Resource.loading())
+
+    val users: StateFlow<Resource<List<ApiUser>>> = _users
 
     init {
         fetchUsers()
@@ -25,7 +25,7 @@ class EmitAllViewModel(
 
     private fun fetchUsers() {
         viewModelScope.launch {
-            users.postValue(Resource.loading(null))
+            _users.value = Resource.loading()
             apiHelper.getUsers()
                 .zip(
                     apiHelper.getUsersWithError()
@@ -37,16 +37,12 @@ class EmitAllViewModel(
                 }
                 .flowOn(Dispatchers.IO)
                 .catch { e ->
-                    users.postValue(Resource.error(e.toString(), null))
+                    _users.value = Resource.error(e.toString())
                 }
                 .collect {
-                    users.postValue(Resource.success(it))
+                    _users.value = Resource.success(it)
                 }
         }
-    }
-
-    fun getUsers(): LiveData<Resource<List<ApiUser>>> {
-        return users
     }
 
 }

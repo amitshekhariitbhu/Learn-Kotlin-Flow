@@ -1,9 +1,9 @@
 package me.amitshekhar.learn.kotlin.flow.ui.completion
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
@@ -16,7 +16,9 @@ class CompletionViewModel(
     private val dbHelper: DatabaseHelper
 ) : ViewModel() {
 
-    private val status = MutableLiveData<Resource<String>>()
+    private val _status = MutableStateFlow<Resource<String>>(Resource.loading())
+
+    val status: StateFlow<Resource<String>> = _status
 
     init {
         fetchUsers()
@@ -24,21 +26,17 @@ class CompletionViewModel(
 
     private fun fetchUsers() {
         viewModelScope.launch {
-            status.postValue(Resource.loading(null))
+            _status.value = Resource.loading()
             apiHelper.getUsers()
                 .catch { e ->
-                    status.postValue(Resource.error(e.toString(), null))
+                    _status.value = Resource.error(e.toString())
                 }
                 .onCompletion {
-                    status.postValue(Resource.success("Task Completed"))
+                    _status.value = Resource.success("Task Completed")
                 }
                 .collect {
                 }
         }
-    }
-
-    fun getStatus(): LiveData<Resource<String>> {
-        return status
     }
 
 }

@@ -1,7 +1,5 @@
 package me.amitshekhar.learn.kotlin.flow.ui.room
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +13,9 @@ import me.amitshekhar.learn.kotlin.flow.utils.Resource
 class RoomDBViewModel(private val apiHelper: ApiHelper, private val dbHelper: DatabaseHelper) :
     ViewModel() {
 
-    private val users = MutableLiveData<Resource<List<User>>>()
+    private val _users = MutableStateFlow<Resource<List<User>>>(Resource.loading())
+
+    val users: StateFlow<Resource<List<User>>> = _users
 
     init {
         fetchUsers()
@@ -23,7 +23,7 @@ class RoomDBViewModel(private val apiHelper: ApiHelper, private val dbHelper: Da
 
     private fun fetchUsers() {
         viewModelScope.launch {
-            users.postValue(Resource.loading(null))
+            _users.value = Resource.loading()
             dbHelper.getUsers()
                 .flatMapConcat { usersFromDb ->
                     if (usersFromDb.isEmpty()) {
@@ -57,16 +57,12 @@ class RoomDBViewModel(private val apiHelper: ApiHelper, private val dbHelper: Da
                 }
                 .flowOn(Dispatchers.IO)
                 .catch { e ->
-                    users.postValue(Resource.error(e.toString(), null))
+                    _users.value = Resource.error(e.toString())
                 }
                 .collect {
-                    users.postValue(Resource.success(it))
+                    _users.value = Resource.success(it)
                 }
         }
-    }
-
-    fun getUsers(): LiveData<Resource<List<User>>> {
-        return users
     }
 
 }
