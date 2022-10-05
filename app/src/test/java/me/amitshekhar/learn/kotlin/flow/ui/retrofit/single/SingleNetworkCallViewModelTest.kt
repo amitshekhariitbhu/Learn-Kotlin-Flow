@@ -1,10 +1,12 @@
 package me.amitshekhar.learn.kotlin.flow.ui.retrofit.single
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
+import app.cash.turbine.test
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.runTest
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelper
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelper
 import me.amitshekhar.learn.kotlin.flow.data.model.ApiUser
@@ -36,9 +38,6 @@ class SingleNetworkCallViewModelTest {
     @Mock
     private lateinit var databaseHelper: DatabaseHelper
 
-    @Mock
-    private lateinit var apiUsersObserver: Observer<Resource<List<ApiUser>>>
-
     @Before
     fun setUp() {
         // do something if required
@@ -46,21 +45,22 @@ class SingleNetworkCallViewModelTest {
 
     @Test
     fun givenServerResponse200_whenFetch_shouldReturnSuccess() {
-        testCoroutineRule.runBlockingTest {
+        runTest {
             doReturn(flowOf(emptyList<ApiUser>()))
                 .`when`(apiHelper)
                 .getUsers()
             val viewModel = SingleNetworkCallViewModel(apiHelper, databaseHelper)
-            viewModel.getUsers().observeForever(apiUsersObserver)
+            viewModel.users.test {
+                assertEquals(Resource.success(emptyList<List<ApiUser>>()), awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
             verify(apiHelper).getUsers()
-            verify(apiUsersObserver).onChanged(Resource.success(emptyList()))
-            viewModel.getUsers().removeObserver(apiUsersObserver)
         }
     }
 
     @Test
     fun givenServerResponseError_whenFetch_shouldReturnError() {
-        testCoroutineRule.runBlockingTest {
+        runTest {
             val errorMessage = "Error Message For You"
             doReturn(flow<List<ApiUser>> {
                 throw IllegalStateException(errorMessage)
@@ -68,15 +68,11 @@ class SingleNetworkCallViewModelTest {
                 .`when`(apiHelper)
                 .getUsers()
             val viewModel = SingleNetworkCallViewModel(apiHelper, databaseHelper)
-            viewModel.getUsers().observeForever(apiUsersObserver)
+            viewModel.users.test {
+                assertEquals(IllegalStateException(errorMessage).toString(), awaitItem().message)
+                cancelAndIgnoreRemainingEvents()
+            }
             verify(apiHelper).getUsers()
-            verify(apiUsersObserver).onChanged(
-                Resource.error(
-                    IllegalStateException(errorMessage).toString(),
-                    null
-                )
-            )
-            viewModel.getUsers().removeObserver(apiUsersObserver)
         }
     }
 
