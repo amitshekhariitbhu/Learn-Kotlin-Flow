@@ -121,6 +121,10 @@ Now we have understood what exactly Flow is.
 ## Steps to learn Kotlin Flow from this project
 
 * Learn about the Kotlin Flow from this **[blog](https://amitshekhar.me/blog/flow-api-in-kotlin)**
+* Retrofit with Kotlin
+  Flow [Retrofit with Kotlin Flow](https://amitshekhar.me/blog/retrofit-with-kotlin-flow)
+* Room Database with Kotlin
+  Flow [Room Database with Kotlin Flow](https://amitshekhar.me/blog/room-database-with-kotlin-flow)
 * Then, just clone, build, run the project and start learning Kotlin Flow by examples.
 
 ## You will learn the following from this Learn Kotlin Flow project:
@@ -135,8 +139,9 @@ Now we have understood what exactly Flow is.
 * How to use onCompletion in Flow?
 * Retry Task using retry operator in Flow
 * Retry Task with Exponential Backoff in Flow
-* Using Kotlin Flow with Retrofit.
-* Using Kotlin Flow with Room Database.
+* Using Kotlin Flow with Retrofit. [Blog](https://amitshekhar.me/blog/retrofit-with-kotlin-flow)
+* Using Kotlin Flow with Room
+  Database. [Blog](https://amitshekhar.me/blog/room-database-with-kotlin-flow)
 * Using Kotlin Flow with various 3rd party libraries.
 * Making two network calls in parallel using Kotlin Flow.
 * Doing task in series using Kotlin Flow.
@@ -145,7 +150,8 @@ Now we have understood what exactly Flow is.
 ## Kotlin Flow Examples for Android Development: Activity and ViewModel
 
 * **Single Network Call:** Learn how to make a network call using Kotlin Flow. This is a very simple
-  use-case in Android App Development.
+  use-case in Android App
+  Development. [Retrofit with Kotlin Flow](https://amitshekhar.me/blog/retrofit-with-kotlin-flow)
     * [Activity Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/retrofit/single/SingleNetworkCallActivity.kt)
     * [ViewModel Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/retrofit/single/SingleNetworkCallViewModel.kt)
 
@@ -160,7 +166,8 @@ Now we have understood what exactly Flow is.
     * [ViewModel Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/retrofit/parallel/ParallelNetworkCallsViewModel.kt)
 
 * **Room Database Operation:** Learn how to fetch or insert entity in database using Kotlin Flow.
-  This is useful when you are using Room Database in your Android Application.
+  This is useful when you are using Room Database in your Android
+  Application. [Blog](https://amitshekhar.me/blog/room-database-with-kotlin-flow)
     * [Activity Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/room/RoomDBActivity.kt)
     * [ViewModel Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/room/RoomDBViewModel.kt)
 
