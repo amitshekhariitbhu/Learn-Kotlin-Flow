@@ -2,10 +2,8 @@ package me.amitshekhar.learn.kotlin.flow.ui.map
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelper
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelper
@@ -42,6 +40,7 @@ class MapViewModel(
                     }
                     userList
                 }
+                .flowOn(Dispatchers.IO)
                 .catch { e ->
                     _users.value = Resource.error(e.toString())
                 }
