@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.android.synthetic.main.activity_long_running_task.*
 import kotlinx.android.synthetic.main.activity_recycler_view.progressBar
 import kotlinx.coroutines.launch
@@ -30,25 +32,27 @@ class TwoLongRunningTasksActivity : AppCompatActivity() {
 
     private fun setupLongRunningTask() {
         lifecycleScope.launch {
-            viewModel.status.collect {
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        progressBar.visibility = View.GONE
-                        textView.text = it.data
-                        textView.visibility = View.VISIBLE
-                    }
-                    Status.LOADING -> {
-                        progressBar.visibility = View.VISIBLE
-                        textView.visibility = View.GONE
-                    }
-                    Status.ERROR -> {
-                        //Handle Error
-                        progressBar.visibility = View.GONE
-                        Toast.makeText(
-                            this@TwoLongRunningTasksActivity,
-                            it.message,
-                            Toast.LENGTH_SHORT
-                        ).show()
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.status.collect {
+                    when (it.status) {
+                        Status.SUCCESS -> {
+                            progressBar.visibility = View.GONE
+                            textView.text = it.data
+                            textView.visibility = View.VISIBLE
+                        }
+                        Status.LOADING -> {
+                            progressBar.visibility = View.VISIBLE
+                            textView.visibility = View.GONE
+                        }
+                        Status.ERROR -> {
+                            //Handle Error
+                            progressBar.visibility = View.GONE
+                            Toast.makeText(
+                                this@TwoLongRunningTasksActivity,
+                                it.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 }
             }

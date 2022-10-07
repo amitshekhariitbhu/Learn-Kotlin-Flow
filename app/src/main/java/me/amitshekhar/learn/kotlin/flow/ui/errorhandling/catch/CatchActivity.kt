@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_recycler_view.*
@@ -50,21 +52,24 @@ class CatchActivity : AppCompatActivity() {
 
     private fun setupObserver() {
         lifecycleScope.launch {
-            viewModel.users.collect {
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        progressBar.visibility = View.GONE
-                        it.data?.let { users -> renderList(users) }
-                        recyclerView.visibility = View.VISIBLE
-                    }
-                    Status.LOADING -> {
-                        progressBar.visibility = View.VISIBLE
-                        recyclerView.visibility = View.GONE
-                    }
-                    Status.ERROR -> {
-                        //Handle Error
-                        progressBar.visibility = View.GONE
-                        Toast.makeText(this@CatchActivity, it.message, Toast.LENGTH_SHORT).show()
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.users.collect {
+                    when (it.status) {
+                        Status.SUCCESS -> {
+                            progressBar.visibility = View.GONE
+                            it.data?.let { users -> renderList(users) }
+                            recyclerView.visibility = View.VISIBLE
+                        }
+                        Status.LOADING -> {
+                            progressBar.visibility = View.VISIBLE
+                            recyclerView.visibility = View.GONE
+                        }
+                        Status.ERROR -> {
+                            //Handle Error
+                            progressBar.visibility = View.GONE
+                            Toast.makeText(this@CatchActivity, it.message, Toast.LENGTH_SHORT)
+                                .show()
+                        }
                     }
                 }
             }

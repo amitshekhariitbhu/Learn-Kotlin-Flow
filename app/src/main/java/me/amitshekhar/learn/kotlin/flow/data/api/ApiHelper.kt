@@ -1,7 +1,7 @@
 package me.amitshekhar.learn.kotlin.flow.data.api
 
-import me.amitshekhar.learn.kotlin.flow.data.model.ApiUser
 import kotlinx.coroutines.flow.Flow
+import me.amitshekhar.learn.kotlin.flow.data.model.ApiUser
 
 interface ApiHelper {
 
