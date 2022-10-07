@@ -121,10 +121,9 @@ Now we have understood what exactly Flow is.
 ## Steps to learn Kotlin Flow from this project
 
 * Learn about the Kotlin Flow from this **[blog](https://amitshekhar.me/blog/flow-api-in-kotlin)**
-* Retrofit with Kotlin
-  Flow [Retrofit with Kotlin Flow](https://amitshekhar.me/blog/retrofit-with-kotlin-flow)
-* Room Database with Kotlin
-  Flow [Room Database with Kotlin Flow](https://amitshekhar.me/blog/room-database-with-kotlin-flow)
+* Long-running tasks in parallel with Kotlin Flow [Long-running tasks in parallel with Kotlin Flow](https://amitshekhar.me/blog/long-running-tasks-in-parallel-with-kotlin-flow)
+* Retrofit with Kotlin Flow [Retrofit with Kotlin Flow](https://amitshekhar.me/blog/retrofit-with-kotlin-flow)
+* Room Database with Kotlin Flow [Room Database with Kotlin Flow](https://amitshekhar.me/blog/room-database-with-kotlin-flow)
 * Then, just clone, build, run the project and start learning Kotlin Flow by examples.
 
 ## You will learn the following from this Learn Kotlin Flow project:
@@ -132,7 +131,7 @@ Now we have understood what exactly Flow is.
 * How to use Kotlin Flow in Android Project?
 * Doing simple task in background using Kotlin Flow.
 * Doing tasks in series using Kotlin Flow.
-* Doing tasks in parallel using Kotlin Flow.
+* Doing tasks in parallel using Kotlin Flow. [Blog](https://amitshekhar.me/blog/long-running-tasks-in-parallel-with-kotlin-flow)
 * Making two network calls in parallel using Kotlin Flow.
 * Using operators like filter, map, reduce, flatMapConcat, zip, and etc.
 * Exception handling in Kotlin Flow
@@ -176,7 +175,7 @@ Now we have understood what exactly Flow is.
     * [Activity Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/task/onetask/LongRunningTaskActivity.kt)
     * [ViewModel Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/task/onetask/LongRunningTaskViewModel.kt)
 
-* **Two Long Running Tasks:** Learn how to run two long running tasks in parallel using Kotlin Flow.
+* **Two Long Running Tasks:** Learn how to run two long running tasks in parallel using Kotlin Flow. Blog: [Long-running tasks in parallel with Kotlin Flow](https://amitshekhar.me/blog/long-running-tasks-in-parallel-with-kotlin-flow)
     * [Activity Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/task/twotasks/TwoLongRunningTasksActivity.kt)
     * [ViewModel Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/task/twotasks/TwoLongRunningTasksViewModel.kt)
 
@@ -246,3 +245,16 @@ Now we have understood what exactly Flow is.
 ### Contributing to Learn Kotlin Flow
 
 Just make pull request. You are in!
+
+Thanks
+
+[**Amit Shekhar**](https://amitshekhar.me)
+
+You can connect with me on:
+
+- [Twitter](https://twitter.com/amitiitbhu)
+- [LinkedIn](https://www.linkedin.com/in/amit-shekhar-iitbhu)
+- [GitHub](https://github.com/amitshekhariitbhu)
+- [Facebook](https://www.facebook.com/amit.shekhar.iitbhu)
+
+[**Read all of my blogs here.**](https://amitshekhar.me/blog)
