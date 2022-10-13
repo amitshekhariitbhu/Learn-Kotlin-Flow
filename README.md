@@ -122,6 +122,7 @@ Now we have understood what exactly Flow is.
 
 * Learn about the Kotlin Flow from this **[blog](https://amitshekhar.me/blog/flow-api-in-kotlin)**
 * Long-running tasks in parallel with Kotlin Flow [Long-running tasks in parallel with Kotlin Flow](https://amitshekhar.me/blog/long-running-tasks-in-parallel-with-kotlin-flow)
+* Retry Operator in Kotlin Flow [Retry Operator in Kotlin Flow](https://amitshekhar.me/blog/retry-operator-in-kotlin-flow)
 * Retrofit with Kotlin Flow [Retrofit with Kotlin Flow](https://amitshekhar.me/blog/retrofit-with-kotlin-flow)
 * Room Database with Kotlin Flow [Room Database with Kotlin Flow](https://amitshekhar.me/blog/room-database-with-kotlin-flow)
 * Then, just clone, build, run the project and start learning Kotlin Flow by examples.
@@ -136,8 +137,8 @@ Now we have understood what exactly Flow is.
 * Using operators like filter, map, reduce, flatMapConcat, zip, and etc.
 * Exception handling in Kotlin Flow
 * How to use onCompletion in Flow?
-* Retry Task using retry operator in Flow
-* Retry Task with Exponential Backoff in Flow
+* Retry Task using retry operator in Flow. Blog: [Retry Operator in Kotlin Flow](https://amitshekhar.me/blog/retry-operator-in-kotlin-flow)
+* Retry Task with Exponential Backoff in Flow. Blog: [Retry Operator in Kotlin Flow](https://amitshekhar.me/blog/retry-operator-in-kotlin-flow)
 * Using Kotlin Flow with Retrofit. [Blog](https://amitshekhar.me/blog/retrofit-with-kotlin-flow)
 * Using Kotlin Flow with Room
   Database. [Blog](https://amitshekhar.me/blog/room-database-with-kotlin-flow)
@@ -207,15 +208,15 @@ Now we have understood what exactly Flow is.
   DistinctUntilChanged, FlatMapLatest.
     * [Activity Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/search/SearchActivity.kt)
 
-* **Retry:**
+* **Retry:** Blog: [Retry Operator in Kotlin Flow](https://amitshekhar.me/blog/retry-operator-in-kotlin-flow)
     * [Activity Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/retry/RetryActivity.kt)
     * [ViewModel Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/retry/RetryViewModel.kt)
 
-* **RetryWhen:**
+* **RetryWhen:** Blog: [Retry Operator in Kotlin Flow](https://amitshekhar.me/blog/retry-operator-in-kotlin-flow)
     * [Activity Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/retrywhen/RetryWhenActivity.kt)
     * [ViewModel Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/retrywhen/RetryWhenViewModel.kt)
 
-* **Retry with Exponential Backoff:**
+* **Retry with Exponential Backoff:** Blog: [Retry Operator in Kotlin Flow](https://amitshekhar.me/blog/retry-operator-in-kotlin-flow)
     * [Activity Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/retryexponentialbackoff/RetryExponentialBackoffActivity.kt)
     * [ViewModel Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/retryexponentialbackoff/RetryExponentialBackoffModel.kt)
 
