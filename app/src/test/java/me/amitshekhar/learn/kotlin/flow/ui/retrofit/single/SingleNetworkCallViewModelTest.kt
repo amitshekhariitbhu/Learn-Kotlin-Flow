@@ -69,7 +69,10 @@ class SingleNetworkCallViewModelTest {
                 .getUsers()
             val viewModel = SingleNetworkCallViewModel(apiHelper, databaseHelper)
             viewModel.users.test {
-                assertEquals(IllegalStateException(errorMessage).toString(), awaitItem().message)
+                assertEquals(
+                    Resource.error<List<ApiUser>>(IllegalStateException(errorMessage).toString()),
+                    awaitItem()
+                )
                 cancelAndIgnoreRemainingEvents()
             }
             verify(apiHelper).getUsers()
