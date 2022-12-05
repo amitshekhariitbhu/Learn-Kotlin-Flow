@@ -8,11 +8,13 @@ import kotlinx.coroutines.launch
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelper
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelper
 import me.amitshekhar.learn.kotlin.flow.data.model.ApiUser
+import me.amitshekhar.learn.kotlin.flow.utils.DispatcherProvider
 import me.amitshekhar.learn.kotlin.flow.utils.Resource
 
 class SeriesNetworkCallsViewModel(
     private val apiHelper: ApiHelper,
-    private val dbHelper: DatabaseHelper
+    private val dbHelper: DatabaseHelper,
+    val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
     private val _users = MutableStateFlow<Resource<List<ApiUser>>>(Resource.loading())
@@ -24,7 +26,7 @@ class SeriesNetworkCallsViewModel(
     }
 
     private fun fetchUsers() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcherProvider.main) {
             _users.value = Resource.loading()
             val allUsersFromApi = mutableListOf<ApiUser>()
             apiHelper.getUsers()
@@ -32,7 +34,7 @@ class SeriesNetworkCallsViewModel(
                     allUsersFromApi.addAll(usersFromApi)
                     apiHelper.getMoreUsers()
                 }
-                .flowOn(Dispatchers.IO)
+                .flowOn(dispatcherProvider.io)
                 .catch { e ->
                     _users.value = Resource.error(e.toString())
                 }

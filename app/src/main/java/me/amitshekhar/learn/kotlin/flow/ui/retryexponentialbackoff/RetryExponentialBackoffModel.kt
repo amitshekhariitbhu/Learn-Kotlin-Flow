@@ -8,12 +8,14 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelper
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelper
+import me.amitshekhar.learn.kotlin.flow.utils.DispatcherProvider
 import me.amitshekhar.learn.kotlin.flow.utils.Resource
 import java.io.IOException
 
 class RetryExponentialBackoffModel(
     val apiHelper: ApiHelper,
-    dbHelper: DatabaseHelper
+    dbHelper: DatabaseHelper,
+    val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
     private val _status = MutableStateFlow<Resource<String>>(Resource.loading())
@@ -21,13 +23,13 @@ class RetryExponentialBackoffModel(
     val status: StateFlow<Resource<String>> = _status
 
     fun startTask() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcherProvider.main) {
             _status.value = Resource.loading()
             // do a long running task
             var currentDelay = 1000L
             val delayFactor = 2
             doLongRunningTask()
-                .flowOn(Dispatchers.Default)
+                .flowOn(dispatcherProvider.default)
                 .retry(retries = 3) { cause ->
                     if (cause is IOException) {
                         delay(currentDelay)

@@ -8,11 +8,13 @@ import kotlinx.coroutines.launch
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelper
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelper
 import me.amitshekhar.learn.kotlin.flow.data.local.entity.User
+import me.amitshekhar.learn.kotlin.flow.utils.DispatcherProvider
 import me.amitshekhar.learn.kotlin.flow.utils.Resource
 
 class MapViewModel(
     val apiHelper: ApiHelper,
-    dbHelper: DatabaseHelper
+    dbHelper: DatabaseHelper,
+    val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
     private val _users = MutableStateFlow<Resource<List<User>>>(Resource.loading())
@@ -24,7 +26,7 @@ class MapViewModel(
     }
 
     private fun fetchUsers() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcherProvider.main) {
             _users.value = Resource.loading()
             apiHelper.getUsers()
                 .map { apiUserList ->
@@ -40,7 +42,7 @@ class MapViewModel(
                     }
                     userList
                 }
-                .flowOn(Dispatchers.IO)
+                .flowOn(dispatcherProvider.io)
                 .catch { e ->
                     _users.value = Resource.error(e.toString())
                 }

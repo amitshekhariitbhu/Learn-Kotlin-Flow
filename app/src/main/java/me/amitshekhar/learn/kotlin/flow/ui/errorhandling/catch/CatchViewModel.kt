@@ -9,11 +9,13 @@ import kotlinx.coroutines.launch
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelper
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelper
 import me.amitshekhar.learn.kotlin.flow.data.model.ApiUser
+import me.amitshekhar.learn.kotlin.flow.utils.DispatcherProvider
 import me.amitshekhar.learn.kotlin.flow.utils.Resource
 
 class CatchViewModel(
     private val apiHelper: ApiHelper,
-    private val dbHelper: DatabaseHelper
+    private val dbHelper: DatabaseHelper,
+    val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
     private val _users = MutableStateFlow<Resource<List<ApiUser>>>(Resource.loading())
@@ -25,7 +27,7 @@ class CatchViewModel(
     }
 
     private fun fetchUsers() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcherProvider.main) {
             _users.value = Resource.loading()
             apiHelper.getUsersWithError()
                 .catch { e ->

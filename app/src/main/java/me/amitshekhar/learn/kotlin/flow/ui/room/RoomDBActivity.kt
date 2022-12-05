@@ -19,6 +19,7 @@ import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseBuilder
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelperImpl
 import me.amitshekhar.learn.kotlin.flow.data.local.entity.User
 import me.amitshekhar.learn.kotlin.flow.ui.base.UserAdapter
+import me.amitshekhar.learn.kotlin.flow.utils.DefaultDispatcherProvider
 import me.amitshekhar.learn.kotlin.flow.utils.Status
 import me.amitshekhar.learn.kotlin.flow.utils.ViewModelFactory
 
@@ -86,7 +87,8 @@ class RoomDBActivity : AppCompatActivity() {
             this,
             ViewModelFactory(
                 ApiHelperImpl(RetrofitBuilder.apiService),
-                DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
+                DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext)),
+                DefaultDispatcherProvider()
             )
         )[RoomDBViewModel::class.java]
     }

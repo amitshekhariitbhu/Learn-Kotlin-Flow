@@ -8,11 +8,13 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelper
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelper
+import me.amitshekhar.learn.kotlin.flow.utils.DispatcherProvider
 import me.amitshekhar.learn.kotlin.flow.utils.Resource
 
 class TwoLongRunningTasksViewModel(
     private val apiHelper: ApiHelper,
-    private val dbHelper: DatabaseHelper
+    private val dbHelper: DatabaseHelper,
+    val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
     private val _status = MutableStateFlow<Resource<String>>(Resource.loading())
@@ -20,13 +22,13 @@ class TwoLongRunningTasksViewModel(
     val status: StateFlow<Resource<String>> = _status
 
     fun startLongRunningTask() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcherProvider.main) {
             _status.value = Resource.loading()
             doLongRunningTaskOne()
                 .zip(doLongRunningTaskTwo()) { resultOne, resultTwo ->
                     return@zip resultOne + resultTwo
                 }
-                .flowOn(Dispatchers.Default)
+                .flowOn(dispatcherProvider.default)
                 .catch { e ->
                     _status.value = Resource.error(e.toString())
                 }

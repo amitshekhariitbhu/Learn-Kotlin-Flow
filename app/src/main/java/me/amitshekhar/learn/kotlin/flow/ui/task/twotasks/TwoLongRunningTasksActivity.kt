@@ -16,6 +16,7 @@ import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelperImpl
 import me.amitshekhar.learn.kotlin.flow.data.api.RetrofitBuilder
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseBuilder
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelperImpl
+import me.amitshekhar.learn.kotlin.flow.utils.DefaultDispatcherProvider
 import me.amitshekhar.learn.kotlin.flow.utils.Status
 import me.amitshekhar.learn.kotlin.flow.utils.ViewModelFactory
 
@@ -65,7 +66,8 @@ class TwoLongRunningTasksActivity : AppCompatActivity() {
             this,
             ViewModelFactory(
                 ApiHelperImpl(RetrofitBuilder.apiService),
-                DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
+                DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext)),
+                DefaultDispatcherProvider()
             )
         )[TwoLongRunningTasksViewModel::class.java]
     }

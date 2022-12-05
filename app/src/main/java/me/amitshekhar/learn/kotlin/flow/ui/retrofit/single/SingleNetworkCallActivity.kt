@@ -19,6 +19,7 @@ import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseBuilder
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelperImpl
 import me.amitshekhar.learn.kotlin.flow.data.model.ApiUser
 import me.amitshekhar.learn.kotlin.flow.ui.base.ApiUserAdapter
+import me.amitshekhar.learn.kotlin.flow.utils.DefaultDispatcherProvider
 import me.amitshekhar.learn.kotlin.flow.utils.Status
 import me.amitshekhar.learn.kotlin.flow.utils.ViewModelFactory
 
@@ -89,7 +90,8 @@ class SingleNetworkCallActivity : AppCompatActivity() {
             this,
             ViewModelFactory(
                 ApiHelperImpl(RetrofitBuilder.apiService),
-                DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
+                DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext)),
+                DefaultDispatcherProvider()
             )
         )[SingleNetworkCallViewModel::class.java]
     }

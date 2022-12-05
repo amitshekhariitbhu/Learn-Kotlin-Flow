@@ -6,6 +6,7 @@ import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import me.amitshekhar.learn.kotlin.flow.R
+import me.amitshekhar.learn.kotlin.flow.utils.DefaultDispatcherProvider
 import me.amitshekhar.learn.kotlin.flow.utils.getQueryTextChangeStateFlow
 import kotlin.coroutines.CoroutineContext
 
@@ -47,7 +48,7 @@ class SearchActivity : AppCompatActivity(), CoroutineScope {
                             emitAll(flowOf(""))
                         }
                 }
-                .flowOn(Dispatchers.Default)
+                .flowOn(DefaultDispatcherProvider().default)
                 .collect { result ->
                     textViewResult.text = result
                 }

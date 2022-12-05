@@ -10,8 +10,10 @@ import kotlinx.coroutines.test.runTest
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelper
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelper
 import me.amitshekhar.learn.kotlin.flow.data.model.ApiUser
+import me.amitshekhar.learn.kotlin.flow.utils.DispatcherProvider
 import me.amitshekhar.learn.kotlin.flow.utils.Resource
 import me.amitshekhar.learn.kotlin.flow.utils.TestCoroutineRule
+import me.amitshekhar.learn.kotlin.flow.utils.TestDispatcherProvider
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -38,9 +40,11 @@ class SingleNetworkCallViewModelTest {
     @Mock
     private lateinit var databaseHelper: DatabaseHelper
 
+    private lateinit var dispatcherProvider: DispatcherProvider
+
     @Before
     fun setUp() {
-        // do something if required
+        dispatcherProvider = TestDispatcherProvider()
     }
 
     @Test
@@ -49,7 +53,8 @@ class SingleNetworkCallViewModelTest {
             doReturn(flowOf(emptyList<ApiUser>()))
                 .`when`(apiHelper)
                 .getUsers()
-            val viewModel = SingleNetworkCallViewModel(apiHelper, databaseHelper)
+            val viewModel =
+                SingleNetworkCallViewModel(apiHelper, databaseHelper, dispatcherProvider)
             viewModel.users.test {
                 assertEquals(Resource.success(emptyList<List<ApiUser>>()), awaitItem())
                 cancelAndIgnoreRemainingEvents()
@@ -67,7 +72,9 @@ class SingleNetworkCallViewModelTest {
             })
                 .`when`(apiHelper)
                 .getUsers()
-            val viewModel = SingleNetworkCallViewModel(apiHelper, databaseHelper)
+
+            val viewModel =
+                SingleNetworkCallViewModel(apiHelper, databaseHelper, dispatcherProvider)
             viewModel.users.test {
                 assertEquals(
                     Resource.error<List<ApiUser>>(IllegalStateException(errorMessage).toString()),

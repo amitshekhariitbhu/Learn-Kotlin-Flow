@@ -2,15 +2,19 @@ package me.amitshekhar.learn.kotlin.flow.ui.room
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelper
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelper
 import me.amitshekhar.learn.kotlin.flow.data.local.entity.User
+import me.amitshekhar.learn.kotlin.flow.utils.DispatcherProvider
 import me.amitshekhar.learn.kotlin.flow.utils.Resource
 
-class RoomDBViewModel(private val apiHelper: ApiHelper, private val dbHelper: DatabaseHelper) :
+class RoomDBViewModel(
+    private val apiHelper: ApiHelper,
+    private val dbHelper: DatabaseHelper,
+    val dispatcherProvider: DispatcherProvider
+) :
     ViewModel() {
 
     private val _users = MutableStateFlow<Resource<List<User>>>(Resource.loading())
@@ -22,7 +26,7 @@ class RoomDBViewModel(private val apiHelper: ApiHelper, private val dbHelper: Da
     }
 
     private fun fetchUsers() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcherProvider.main) {
             _users.value = Resource.loading()
             dbHelper.getUsers()
                 .flatMapConcat { usersFromDb ->
@@ -55,7 +59,7 @@ class RoomDBViewModel(private val apiHelper: ApiHelper, private val dbHelper: Da
                         }
                     }
                 }
-                .flowOn(Dispatchers.IO)
+                .flowOn(dispatcherProvider.io)
                 .catch { e ->
                     _users.value = Resource.error(e.toString())
                 }
