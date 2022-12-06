@@ -1,6 +1,5 @@
 package me.amitshekhar.learn.kotlin.flow.ui.retrofit.single
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -12,13 +11,10 @@ import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelper
 import me.amitshekhar.learn.kotlin.flow.data.model.ApiUser
 import me.amitshekhar.learn.kotlin.flow.utils.DispatcherProvider
 import me.amitshekhar.learn.kotlin.flow.utils.Resource
-import me.amitshekhar.learn.kotlin.flow.utils.TestCoroutineRule
 import me.amitshekhar.learn.kotlin.flow.utils.TestDispatcherProvider
 import org.junit.After
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.doReturn
@@ -28,11 +24,6 @@ import org.mockito.junit.MockitoJUnitRunner
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class SingleNetworkCallViewModelTest {
-    @get:Rule
-    val testInstantTaskExecutorRule: TestRule = InstantTaskExecutorRule()
-
-    @get:Rule
-    val testCoroutineRule = TestCoroutineRule()
 
     @Mock
     private lateinit var apiHelper: ApiHelper
@@ -50,9 +41,7 @@ class SingleNetworkCallViewModelTest {
     @Test
     fun givenServerResponse200_whenFetch_shouldReturnSuccess() {
         runTest {
-            doReturn(flowOf(emptyList<ApiUser>()))
-                .`when`(apiHelper)
-                .getUsers()
+            doReturn(flowOf(emptyList<ApiUser>())).`when`(apiHelper).getUsers()
             val viewModel =
                 SingleNetworkCallViewModel(apiHelper, databaseHelper, dispatcherProvider)
             viewModel.users.test {
@@ -69,9 +58,7 @@ class SingleNetworkCallViewModelTest {
             val errorMessage = "Error Message For You"
             doReturn(flow<List<ApiUser>> {
                 throw IllegalStateException(errorMessage)
-            })
-                .`when`(apiHelper)
-                .getUsers()
+            }).`when`(apiHelper).getUsers()
 
             val viewModel =
                 SingleNetworkCallViewModel(apiHelper, databaseHelper, dispatcherProvider)
