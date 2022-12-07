@@ -27,7 +27,7 @@ class SingleNetworkCallViewModel(
         fetchUsers()
     }
 
-    fun fetchUsers() {
+    private fun fetchUsers() {
         viewModelScope.launch(dispatcherProvider.main) {
             _users.value = Resource.loading()
             apiHelper.getUsers()
