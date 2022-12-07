@@ -150,7 +150,7 @@ Now we have understood what exactly Flow is.
 * Using Kotlin Flow with various 3rd party libraries.
 * Making two network calls in parallel using Kotlin Flow.
 * Doing task in series using Kotlin Flow.
-* Writing Unit-Test for ViewModel which uses Kotlin Flow.
+* Writing Unit-Test for ViewModel which uses Kotlin Flow. Blog: [Unit Testing ViewModel with Kotlin Flow and StateFlow](https://amitshekhar.me/blog/unit-testing-viewmodel-with-kotlin-flow-and-stateflow)
 
 ## Kotlin Flow Examples for Android Development: Activity and ViewModel
 
