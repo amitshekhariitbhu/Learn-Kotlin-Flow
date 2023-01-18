@@ -7,6 +7,17 @@
 * This project is for someone who wants to get started with Kotlin Flow.
 * I have tried to add the examples we implement in our Android project frequently.
 
+## About me
+
+Hi, I am [**Amit Shekhar**](https://amitshekhar.me), I have mentored many developers, and their efforts landed them high-paying tech jobs, helped many tech companies in solving their unique problems, and created many open-source libraries being used by top companies. I am passionate about sharing knowledge through open-source, blogs, and videos.
+
+You can connect with me on:
+
+- [Twitter](https://twitter.com/amitiitbhu)
+- [YouTube](https://www.youtube.com/@amitshekhar)
+- [LinkedIn](https://www.linkedin.com/in/amit-shekhar-iitbhu)
+- [GitHub](https://github.com/amitshekhariitbhu)
+
 ## Steps to learn Kotlin Flow from this project
 
 First, we need to learn the concepts. 
