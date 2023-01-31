@@ -35,6 +35,7 @@ I have written a series of blogs on **Flow API in Kotlin**:
 - [Room Database with Kotlin Flow](https://amitshekhar.me/blog/room-database-with-kotlin-flow)
 - [Kotlin Flow Zip Operator for Parallel Multiple Network Calls](https://amitshekhar.me/blog/kotlin-flow-zip-operator-parallel-multiple-network-calls)
 - [Instant Search Using Kotlin Flow Operators](https://amitshekhar.me/blog/instant-search-using-kotlin-flow-operators)
+- [callbackFlow - Callback to Flow API in Kotlin](https://amitshekhar.me/blog/callback-to-flow-api-in-kotlin)
 - [Exception Handling in Kotlin Flow](https://amitshekhar.me/blog/exception-handling-in-kotlin-flow)
 - [Unit Testing ViewModel with Kotlin Flow and StateFlow](https://amitshekhar.me/blog/unit-testing-viewmodel-with-kotlin-flow-and-stateflow)
 
