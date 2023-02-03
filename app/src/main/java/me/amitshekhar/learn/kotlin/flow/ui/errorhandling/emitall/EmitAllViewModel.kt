@@ -2,7 +2,6 @@ package me.amitshekhar.learn.kotlin.flow.ui.errorhandling.emitall
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelper
@@ -28,22 +27,20 @@ class EmitAllViewModel(
     private fun fetchUsers() {
         viewModelScope.launch(dispatcherProvider.main) {
             _users.value = Resource.loading()
-            apiHelper.getUsers()
-                .zip(
-                    apiHelper.getUsersWithError()
-                        .catch { emitAll(flowOf(emptyList())) }) { usersFromApi, moreUsersFromApi ->
-                    val allUsersFromApi = mutableListOf<ApiUser>()
-                    allUsersFromApi.addAll(usersFromApi)
-                    allUsersFromApi.addAll(moreUsersFromApi)
-                    return@zip allUsersFromApi
-                }
-                .flowOn(dispatcherProvider.io)
-                .catch { e ->
-                    _users.value = Resource.error(e.toString())
-                }
-                .collect {
-                    _users.value = Resource.success(it)
-                }
+            apiHelper.getUsers().catch {
+                emitAll(flowOf(emptyList()))
+            }.zip(apiHelper.getUsersWithError().catch {
+                emitAll(flowOf(emptyList()))
+            }) { usersFromApi, moreUsersFromApi ->
+                val allUsersFromApi = mutableListOf<ApiUser>()
+                allUsersFromApi.addAll(usersFromApi)
+                allUsersFromApi.addAll(moreUsersFromApi)
+                return@zip allUsersFromApi
+            }.flowOn(dispatcherProvider.io).catch { e ->
+                _users.value = Resource.error(e.toString())
+            }.collect {
+                _users.value = Resource.success(it)
+            }
         }
     }
 
