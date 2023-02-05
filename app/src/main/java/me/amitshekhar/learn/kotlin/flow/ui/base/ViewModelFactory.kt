@@ -1,4 +1,4 @@
-package me.amitshekhar.learn.kotlin.flow.utils
+package me.amitshekhar.learn.kotlin.flow.ui.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +19,7 @@ import me.amitshekhar.learn.kotlin.flow.ui.retrywhen.RetryWhenViewModel
 import me.amitshekhar.learn.kotlin.flow.ui.room.RoomDBViewModel
 import me.amitshekhar.learn.kotlin.flow.ui.task.onetask.LongRunningTaskViewModel
 import me.amitshekhar.learn.kotlin.flow.ui.task.twotasks.TwoLongRunningTasksViewModel
+import me.amitshekhar.learn.kotlin.flow.utils.DispatcherProvider
 
 class ViewModelFactory(
     private val apiHelper: ApiHelper,

@@ -10,8 +10,8 @@ import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelper
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelper
 import me.amitshekhar.learn.kotlin.flow.data.model.ApiUser
 import me.amitshekhar.learn.kotlin.flow.utils.DispatcherProvider
-import me.amitshekhar.learn.kotlin.flow.utils.Resource
 import me.amitshekhar.learn.kotlin.flow.utils.TestDispatcherProvider
+import me.amitshekhar.learn.kotlin.flow.ui.base.UiState
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -45,7 +45,7 @@ class SingleNetworkCallViewModelTest {
             val viewModel =
                 SingleNetworkCallViewModel(apiHelper, databaseHelper, dispatcherProvider)
             viewModel.users.test {
-                assertEquals(Resource.success(emptyList<List<ApiUser>>()), awaitItem())
+                assertEquals(UiState.Success(emptyList<List<ApiUser>>()), awaitItem())
                 cancelAndIgnoreRemainingEvents()
             }
             verify(apiHelper).getUsers()
@@ -64,7 +64,7 @@ class SingleNetworkCallViewModelTest {
                 SingleNetworkCallViewModel(apiHelper, databaseHelper, dispatcherProvider)
             viewModel.users.test {
                 assertEquals(
-                    Resource.error<List<ApiUser>>(IllegalStateException(errorMessage).toString()),
+                    UiState.Error(IllegalStateException(errorMessage).toString()),
                     awaitItem()
                 )
                 cancelAndIgnoreRemainingEvents()

@@ -20,8 +20,8 @@ import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelperImpl
 import me.amitshekhar.learn.kotlin.flow.data.model.ApiUser
 import me.amitshekhar.learn.kotlin.flow.ui.base.ApiUserAdapter
 import me.amitshekhar.learn.kotlin.flow.utils.DefaultDispatcherProvider
-import me.amitshekhar.learn.kotlin.flow.utils.Status
-import me.amitshekhar.learn.kotlin.flow.utils.ViewModelFactory
+import me.amitshekhar.learn.kotlin.flow.ui.base.UiState
+import me.amitshekhar.learn.kotlin.flow.ui.base.ViewModelFactory
 
 class EmitAllActivity : AppCompatActivity() {
 
@@ -38,10 +38,9 @@ class EmitAllActivity : AppCompatActivity() {
 
     private fun setupUI() {
         recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter =
-            ApiUserAdapter(
-                arrayListOf()
-            )
+        adapter = ApiUserAdapter(
+            arrayListOf()
+        )
         recyclerView.addItemDecoration(
             DividerItemDecoration(
                 recyclerView.context,
@@ -55,17 +54,17 @@ class EmitAllActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.users.collect {
-                    when (it.status) {
-                        Status.SUCCESS -> {
+                    when (it) {
+                        is UiState.Success -> {
                             progressBar.visibility = View.GONE
-                            it.data?.let { users -> renderList(users) }
+                            renderList(it.data)
                             recyclerView.visibility = View.VISIBLE
                         }
-                        Status.LOADING -> {
+                        is UiState.Loading -> {
                             progressBar.visibility = View.VISIBLE
                             recyclerView.visibility = View.GONE
                         }
-                        Status.ERROR -> {
+                        is UiState.Error -> {
                             //Handle Error
                             progressBar.visibility = View.GONE
                             Toast.makeText(this@EmitAllActivity, it.message, Toast.LENGTH_SHORT)
@@ -84,8 +83,7 @@ class EmitAllActivity : AppCompatActivity() {
 
     private fun setupViewModel() {
         viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(
+            this, ViewModelFactory(
                 ApiHelperImpl(RetrofitBuilder.apiService),
                 DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext)),
                 DefaultDispatcherProvider()

@@ -21,8 +21,8 @@ import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelperImpl
 import me.amitshekhar.learn.kotlin.flow.data.local.entity.User
 import me.amitshekhar.learn.kotlin.flow.ui.base.UserAdapter
 import me.amitshekhar.learn.kotlin.flow.utils.DefaultDispatcherProvider
-import me.amitshekhar.learn.kotlin.flow.utils.Status
-import me.amitshekhar.learn.kotlin.flow.utils.ViewModelFactory
+import me.amitshekhar.learn.kotlin.flow.ui.base.UiState
+import me.amitshekhar.learn.kotlin.flow.ui.base.ViewModelFactory
 
 class MapActivity : AppCompatActivity() {
 
@@ -56,17 +56,17 @@ class MapActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.users.collect {
-                    when (it.status) {
-                        Status.SUCCESS -> {
+                    when (it) {
+                        is UiState.Success -> {
                             progressBar.visibility = View.GONE
-                            it.data?.let { users -> renderList(users) }
+                            renderList(it.data)
                             recyclerView.visibility = View.VISIBLE
                         }
-                        Status.LOADING -> {
+                        is UiState.Loading -> {
                             progressBar.visibility = View.VISIBLE
                             recyclerView.visibility = View.GONE
                         }
-                        Status.ERROR -> {
+                        is UiState.Error -> {
                             //Handle Error
                             progressBar.visibility = View.GONE
                             Toast.makeText(this@MapActivity, it.message, Toast.LENGTH_SHORT).show()

@@ -2,14 +2,13 @@ package me.amitshekhar.learn.kotlin.flow.ui.retrofit.series
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelper
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelper
 import me.amitshekhar.learn.kotlin.flow.data.model.ApiUser
 import me.amitshekhar.learn.kotlin.flow.utils.DispatcherProvider
-import me.amitshekhar.learn.kotlin.flow.utils.Resource
+import me.amitshekhar.learn.kotlin.flow.ui.base.UiState
 
 class SeriesNetworkCallsViewModel(
     private val apiHelper: ApiHelper,
@@ -17,9 +16,9 @@ class SeriesNetworkCallsViewModel(
     val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
-    private val _users = MutableStateFlow<Resource<List<ApiUser>>>(Resource.loading())
+    private val _users = MutableStateFlow<UiState<List<ApiUser>>>(UiState.Loading)
 
-    val users: StateFlow<Resource<List<ApiUser>>> = _users
+    val users: StateFlow<UiState<List<ApiUser>>> = _users
 
     init {
         fetchUsers()
@@ -27,7 +26,7 @@ class SeriesNetworkCallsViewModel(
 
     private fun fetchUsers() {
         viewModelScope.launch(dispatcherProvider.main) {
-            _users.value = Resource.loading()
+            _users.value = UiState.Loading
             val allUsersFromApi = mutableListOf<ApiUser>()
             apiHelper.getUsers()
                 .flatMapConcat { usersFromApi ->
@@ -36,11 +35,11 @@ class SeriesNetworkCallsViewModel(
                 }
                 .flowOn(dispatcherProvider.io)
                 .catch { e ->
-                    _users.value = Resource.error(e.toString())
+                    _users.value = UiState.Error(e.toString())
                 }
                 .collect { moreUsersFromApi ->
                     allUsersFromApi.addAll(moreUsersFromApi)
-                    _users.value = Resource.success(allUsersFromApi)
+                    _users.value = UiState.Success(allUsersFromApi)
                 }
         }
     }

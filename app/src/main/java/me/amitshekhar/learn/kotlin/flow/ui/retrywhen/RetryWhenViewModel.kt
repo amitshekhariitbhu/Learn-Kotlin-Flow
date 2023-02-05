@@ -2,14 +2,13 @@ package me.amitshekhar.learn.kotlin.flow.ui.retrywhen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelper
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelper
 import me.amitshekhar.learn.kotlin.flow.utils.DispatcherProvider
-import me.amitshekhar.learn.kotlin.flow.utils.Resource
+import me.amitshekhar.learn.kotlin.flow.ui.base.UiState
 import java.io.IOException
 
 class RetryWhenViewModel(
@@ -18,13 +17,13 @@ class RetryWhenViewModel(
     val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
-    private val _status = MutableStateFlow<Resource<String>>(Resource.loading())
+    private val _status = MutableStateFlow<UiState<String>>(UiState.Loading)
 
-    val status: StateFlow<Resource<String>> = _status
+    val status: StateFlow<UiState<String>> = _status
 
     fun startTask() {
         viewModelScope.launch(dispatcherProvider.main) {
-            _status.value = Resource.loading()
+            _status.value = UiState.Loading
             // do a long running task
             doLongRunningTask()
                 .flowOn(dispatcherProvider.default)
@@ -37,10 +36,10 @@ class RetryWhenViewModel(
                     }
                 }
                 .catch {
-                    _status.value = Resource.error("Something Went Wrong")
+                    _status.value = UiState.Error("Something Went Wrong")
                 }
                 .collect {
-                    _status.value = Resource.success("Task Completed")
+                    _status.value = UiState.Success("Task Completed")
                 }
         }
     }

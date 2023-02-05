@@ -17,8 +17,8 @@ import me.amitshekhar.learn.kotlin.flow.data.api.RetrofitBuilder
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseBuilder
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelperImpl
 import me.amitshekhar.learn.kotlin.flow.utils.DefaultDispatcherProvider
-import me.amitshekhar.learn.kotlin.flow.utils.Status
-import me.amitshekhar.learn.kotlin.flow.utils.ViewModelFactory
+import me.amitshekhar.learn.kotlin.flow.ui.base.UiState
+import me.amitshekhar.learn.kotlin.flow.ui.base.ViewModelFactory
 
 class TwoLongRunningTasksActivity : AppCompatActivity() {
 
@@ -35,17 +35,17 @@ class TwoLongRunningTasksActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.status.collect {
-                    when (it.status) {
-                        Status.SUCCESS -> {
+                    when (it) {
+                        is UiState.Success -> {
                             progressBar.visibility = View.GONE
                             textView.text = it.data
                             textView.visibility = View.VISIBLE
                         }
-                        Status.LOADING -> {
+                        is UiState.Loading -> {
                             progressBar.visibility = View.VISIBLE
                             textView.visibility = View.GONE
                         }
-                        Status.ERROR -> {
+                        is UiState.Error -> {
                             //Handle Error
                             progressBar.visibility = View.GONE
                             Toast.makeText(

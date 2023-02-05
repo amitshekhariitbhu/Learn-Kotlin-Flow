@@ -8,7 +8,7 @@ import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelper
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelper
 import me.amitshekhar.learn.kotlin.flow.data.local.entity.User
 import me.amitshekhar.learn.kotlin.flow.utils.DispatcherProvider
-import me.amitshekhar.learn.kotlin.flow.utils.Resource
+import me.amitshekhar.learn.kotlin.flow.ui.base.UiState
 
 class RoomDBViewModel(
     private val apiHelper: ApiHelper,
@@ -17,9 +17,9 @@ class RoomDBViewModel(
 ) :
     ViewModel() {
 
-    private val _users = MutableStateFlow<Resource<List<User>>>(Resource.loading())
+    private val _users = MutableStateFlow<UiState<List<User>>>(UiState.Loading)
 
-    val users: StateFlow<Resource<List<User>>> = _users
+    val users: StateFlow<UiState<List<User>>> = _users
 
     init {
         fetchUsers()
@@ -27,7 +27,7 @@ class RoomDBViewModel(
 
     private fun fetchUsers() {
         viewModelScope.launch(dispatcherProvider.main) {
-            _users.value = Resource.loading()
+            _users.value = UiState.Loading
             dbHelper.getUsers()
                 .flatMapConcat { usersFromDb ->
                     if (usersFromDb.isEmpty()) {
@@ -61,10 +61,10 @@ class RoomDBViewModel(
                 }
                 .flowOn(dispatcherProvider.io)
                 .catch { e ->
-                    _users.value = Resource.error(e.toString())
+                    _users.value = UiState.Error(e.toString())
                 }
                 .collect {
-                    _users.value = Resource.success(it)
+                    _users.value = UiState.Success(it)
                 }
         }
     }
