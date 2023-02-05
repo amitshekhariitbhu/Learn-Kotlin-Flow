@@ -33,7 +33,7 @@ class ReduceActivity : AppCompatActivity() {
     private fun setupLongRunningTask() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.status.collect {
+                viewModel.uiState.collect {
                     when (it) {
                         is UiState.Success -> {
                             progressBar.visibility = View.GONE

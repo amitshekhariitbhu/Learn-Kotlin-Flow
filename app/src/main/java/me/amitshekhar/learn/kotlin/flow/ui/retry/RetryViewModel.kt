@@ -17,13 +17,13 @@ class RetryViewModel(
     val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
-    private val _status = MutableStateFlow<UiState<String>>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState<String>>(UiState.Loading)
 
-    val status: StateFlow<UiState<String>> = _status
+    val uiState: StateFlow<UiState<String>> = _uiState
 
     fun startTask() {
         viewModelScope.launch(dispatcherProvider.main) {
-            _status.value = UiState.Loading
+            _uiState.value = UiState.Loading
             // do a long running task
             doLongRunningTask()
                 .flowOn(dispatcherProvider.default)
@@ -36,10 +36,10 @@ class RetryViewModel(
                     }
                 }
                 .catch {
-                    _status.value = UiState.Error("Something Went Wrong")
+                    _uiState.value = UiState.Error("Something Went Wrong")
                 }
                 .collect {
-                    _status.value = UiState.Success("Task Completed")
+                    _uiState.value = UiState.Success("Task Completed")
                 }
         }
     }

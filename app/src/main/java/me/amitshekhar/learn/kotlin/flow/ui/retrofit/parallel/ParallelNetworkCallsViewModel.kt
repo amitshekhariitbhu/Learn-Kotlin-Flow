@@ -7,8 +7,8 @@ import kotlinx.coroutines.launch
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelper
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelper
 import me.amitshekhar.learn.kotlin.flow.data.model.ApiUser
-import me.amitshekhar.learn.kotlin.flow.utils.DispatcherProvider
 import me.amitshekhar.learn.kotlin.flow.ui.base.UiState
+import me.amitshekhar.learn.kotlin.flow.utils.DispatcherProvider
 
 class ParallelNetworkCallsViewModel(
     private val apiHelper: ApiHelper,
@@ -16,9 +16,9 @@ class ParallelNetworkCallsViewModel(
     val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
-    private val _users = MutableStateFlow<UiState<List<ApiUser>>>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState<List<ApiUser>>>(UiState.Loading)
 
-    val users: StateFlow<UiState<List<ApiUser>>> = _users
+    val uiState: StateFlow<UiState<List<ApiUser>>> = _uiState
 
     init {
         fetchUsers()
@@ -26,7 +26,7 @@ class ParallelNetworkCallsViewModel(
 
     private fun fetchUsers() {
         viewModelScope.launch(dispatcherProvider.main) {
-            _users.value = UiState.Loading
+            _uiState.value = UiState.Loading
             apiHelper.getUsers()
                 .zip(apiHelper.getMoreUsers()) { usersFromApi, moreUsersFromApi ->
                     val allUsersFromApi = mutableListOf<ApiUser>()
@@ -36,10 +36,10 @@ class ParallelNetworkCallsViewModel(
                 }
                 .flowOn(dispatcherProvider.io)
                 .catch { e ->
-                    _users.value = UiState.Error(e.toString())
+                    _uiState.value = UiState.Error(e.toString())
                 }
                 .collect {
-                    _users.value = UiState.Success(it)
+                    _uiState.value = UiState.Success(it)
                 }
         }
     }

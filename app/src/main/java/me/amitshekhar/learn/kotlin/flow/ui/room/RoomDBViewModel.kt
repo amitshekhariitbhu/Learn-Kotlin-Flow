@@ -17,9 +17,9 @@ class RoomDBViewModel(
 ) :
     ViewModel() {
 
-    private val _users = MutableStateFlow<UiState<List<User>>>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState<List<User>>>(UiState.Loading)
 
-    val users: StateFlow<UiState<List<User>>> = _users
+    val uiState: StateFlow<UiState<List<User>>> = _uiState
 
     init {
         fetchUsers()
@@ -27,7 +27,7 @@ class RoomDBViewModel(
 
     private fun fetchUsers() {
         viewModelScope.launch(dispatcherProvider.main) {
-            _users.value = UiState.Loading
+            _uiState.value = UiState.Loading
             dbHelper.getUsers()
                 .flatMapConcat { usersFromDb ->
                     if (usersFromDb.isEmpty()) {
@@ -61,10 +61,10 @@ class RoomDBViewModel(
                 }
                 .flowOn(dispatcherProvider.io)
                 .catch { e ->
-                    _users.value = UiState.Error(e.toString())
+                    _uiState.value = UiState.Error(e.toString())
                 }
                 .collect {
-                    _users.value = UiState.Success(it)
+                    _uiState.value = UiState.Success(it)
                 }
         }
     }

@@ -18,17 +18,17 @@ class ReduceViewModel(
     val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
-    private val _status = MutableStateFlow<UiState<String>>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState<String>>(UiState.Loading)
 
-    val status: StateFlow<UiState<String>> = _status
+    val uiState: StateFlow<UiState<String>> = _uiState
 
     fun startReduceTask() {
         viewModelScope.launch(dispatcherProvider.main) {
-            _status.value = UiState.Loading
+            _uiState.value = UiState.Loading
             val result = (1..5).asFlow()
                 .reduce { a, b -> a + b }
 
-            _status.value = UiState.Success(result.toString())
+            _uiState.value = UiState.Success(result.toString())
         }
     }
 

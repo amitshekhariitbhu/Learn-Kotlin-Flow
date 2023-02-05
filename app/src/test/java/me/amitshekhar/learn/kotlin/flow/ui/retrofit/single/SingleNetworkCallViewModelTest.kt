@@ -44,7 +44,7 @@ class SingleNetworkCallViewModelTest {
             doReturn(flowOf(emptyList<ApiUser>())).`when`(apiHelper).getUsers()
             val viewModel =
                 SingleNetworkCallViewModel(apiHelper, databaseHelper, dispatcherProvider)
-            viewModel.users.test {
+            viewModel.uiState.test {
                 assertEquals(UiState.Success(emptyList<List<ApiUser>>()), awaitItem())
                 cancelAndIgnoreRemainingEvents()
             }
@@ -62,7 +62,7 @@ class SingleNetworkCallViewModelTest {
 
             val viewModel =
                 SingleNetworkCallViewModel(apiHelper, databaseHelper, dispatcherProvider)
-            viewModel.users.test {
+            viewModel.uiState.test {
                 assertEquals(
                     UiState.Error(IllegalStateException(errorMessage).toString()),
                     awaitItem()

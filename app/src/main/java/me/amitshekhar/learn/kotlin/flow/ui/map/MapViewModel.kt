@@ -7,8 +7,8 @@ import kotlinx.coroutines.launch
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelper
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelper
 import me.amitshekhar.learn.kotlin.flow.data.local.entity.User
-import me.amitshekhar.learn.kotlin.flow.utils.DispatcherProvider
 import me.amitshekhar.learn.kotlin.flow.ui.base.UiState
+import me.amitshekhar.learn.kotlin.flow.utils.DispatcherProvider
 
 class MapViewModel(
     val apiHelper: ApiHelper,
@@ -16,9 +16,9 @@ class MapViewModel(
     val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
-    private val _users = MutableStateFlow<UiState<List<User>>>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState<List<User>>>(UiState.Loading)
 
-    val users: StateFlow<UiState<List<User>>> = _users
+    val uiState: StateFlow<UiState<List<User>>> = _uiState
 
     init {
         fetchUsers()
@@ -26,7 +26,7 @@ class MapViewModel(
 
     private fun fetchUsers() {
         viewModelScope.launch(dispatcherProvider.main) {
-            _users.value = UiState.Loading
+            _uiState.value = UiState.Loading
             apiHelper.getUsers()
                 .map { apiUserList ->
                     val userList = mutableListOf<User>()
@@ -43,10 +43,10 @@ class MapViewModel(
                 }
                 .flowOn(dispatcherProvider.io)
                 .catch { e ->
-                    _users.value = UiState.Error(e.toString())
+                    _uiState.value = UiState.Error(e.toString())
                 }
                 .collect {
-                    _users.value = UiState.Success(it)
+                    _uiState.value = UiState.Success(it)
                 }
         }
     }

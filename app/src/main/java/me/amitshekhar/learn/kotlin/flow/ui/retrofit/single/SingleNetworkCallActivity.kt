@@ -54,7 +54,7 @@ class SingleNetworkCallActivity : AppCompatActivity() {
     private fun setupObserver() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.users.collect {
+                viewModel.uiState.collect {
                     when (it) {
                         is UiState.Success -> {
                             progressBar.visibility = View.GONE

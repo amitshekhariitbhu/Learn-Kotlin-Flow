@@ -16,23 +16,23 @@ class TwoLongRunningTasksViewModel(
     val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
-    private val _status = MutableStateFlow<UiState<String>>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState<String>>(UiState.Loading)
 
-    val status: StateFlow<UiState<String>> = _status
+    val uiState: StateFlow<UiState<String>> = _uiState
 
     fun startLongRunningTask() {
         viewModelScope.launch(dispatcherProvider.main) {
-            _status.value = UiState.Loading
+            _uiState.value = UiState.Loading
             doLongRunningTaskOne()
                 .zip(doLongRunningTaskTwo()) { resultOne, resultTwo ->
                     return@zip resultOne + resultTwo
                 }
                 .flowOn(dispatcherProvider.default)
                 .catch { e ->
-                    _status.value = UiState.Error(e.toString())
+                    _uiState.value = UiState.Error(e.toString())
                 }
                 .collect {
-                    _status.value = UiState.Success(it)
+                    _uiState.value = UiState.Success(it)
                 }
         }
     }

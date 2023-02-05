@@ -15,9 +15,9 @@ class CompletionViewModel(
     val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
-    private val _status = MutableStateFlow<UiState<String>>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState<String>>(UiState.Loading)
 
-    val status: StateFlow<UiState<String>> = _status
+    val uiState: StateFlow<UiState<String>> = _uiState
 
     init {
         fetchUsers()
@@ -25,14 +25,14 @@ class CompletionViewModel(
 
     private fun fetchUsers() {
         viewModelScope.launch(dispatcherProvider.main) {
-            _status.value = UiState.Loading
+            _uiState.value = UiState.Loading
             apiHelper.getUsers()
                 .flowOn(dispatcherProvider.io)
                 .catch { e ->
-                    _status.value = UiState.Error(e.toString())
+                    _uiState.value = UiState.Error(e.toString())
                 }
                 .onCompletion {
-                    _status.value = UiState.Success("Task Completed")
+                    _uiState.value = UiState.Success("Task Completed")
                 }
                 .collect {
                 }
