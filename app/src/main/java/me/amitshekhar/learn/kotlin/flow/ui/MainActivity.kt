@@ -9,6 +9,7 @@ import me.amitshekhar.learn.kotlin.flow.ui.completion.CompletionActivity
 import me.amitshekhar.learn.kotlin.flow.ui.errorhandling.catch.CatchActivity
 import me.amitshekhar.learn.kotlin.flow.ui.errorhandling.emitall.EmitAllActivity
 import me.amitshekhar.learn.kotlin.flow.ui.filter.FilterActivity
+import me.amitshekhar.learn.kotlin.flow.ui.flowon.FlowOnActivity
 import me.amitshekhar.learn.kotlin.flow.ui.map.MapActivity
 import me.amitshekhar.learn.kotlin.flow.ui.reduce.ReduceActivity
 import me.amitshekhar.learn.kotlin.flow.ui.retrofit.parallel.ParallelNetworkCallsActivity
@@ -91,6 +92,10 @@ class MainActivity : AppCompatActivity() {
 
     fun startRetryExponentialBackoffActivity(view: View) {
         startActivity(Intent(this@MainActivity, RetryExponentialBackoffActivity::class.java))
+    }
+
+    fun startFlowOnActivity(view: View) {
+        startActivity(Intent(this@MainActivity, FlowOnActivity::class.java))
     }
 
 }

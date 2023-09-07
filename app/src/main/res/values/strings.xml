@@ -17,5 +17,7 @@
     <string name="retry">Retry</string>
     <string name="retry_when">RetryWhen</string>
     <string name="retry_exponential_backoff">RetryExponentialBackoff</string>
+    <string name="flow_on">FlowOn</string>
     <string name="result">Result</string>
+    <string name="check_logcat">Check Logcat</string>
 </resources>

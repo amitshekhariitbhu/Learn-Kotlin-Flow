@@ -75,6 +75,10 @@
         <activity
             android:name=".ui.retryexponentialbackoff.RetryExponentialBackoffActivity"
             android:label="@string/retry_when" />
+
+        <activity
+            android:name=".ui.flowon.FlowOnActivity"
+            android:label="@string/flow_on" />
     </application>
 
 </manifest>

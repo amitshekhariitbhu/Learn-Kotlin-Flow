@@ -8,6 +8,7 @@ import me.amitshekhar.learn.kotlin.flow.ui.completion.CompletionViewModel
 import me.amitshekhar.learn.kotlin.flow.ui.errorhandling.catch.CatchViewModel
 import me.amitshekhar.learn.kotlin.flow.ui.errorhandling.emitall.EmitAllViewModel
 import me.amitshekhar.learn.kotlin.flow.ui.filter.FilterViewModel
+import me.amitshekhar.learn.kotlin.flow.ui.flowon.FlowOnViewModel
 import me.amitshekhar.learn.kotlin.flow.ui.map.MapViewModel
 import me.amitshekhar.learn.kotlin.flow.ui.reduce.ReduceViewModel
 import me.amitshekhar.learn.kotlin.flow.ui.retrofit.parallel.ParallelNetworkCallsViewModel
@@ -25,8 +26,7 @@ class ViewModelFactory(
     private val apiHelper: ApiHelper,
     private val dbHelper: DatabaseHelper,
     private val dispatcherProvider: DispatcherProvider
-) :
-    ViewModelProvider.NewInstanceFactory() {
+) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -74,6 +74,9 @@ class ViewModelFactory(
         }
         if (modelClass.isAssignableFrom(RetryExponentialBackoffModel::class.java)) {
             return RetryExponentialBackoffModel(apiHelper, dbHelper, dispatcherProvider) as T
+        }
+        if (modelClass.isAssignableFrom(FlowOnViewModel::class.java)) {
+            return FlowOnViewModel(apiHelper, dbHelper, dispatcherProvider) as T
         }
         throw IllegalArgumentException("Unknown class name")
     }
