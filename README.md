@@ -9,7 +9,7 @@
 
 ## About me
 
-Hi, I am [**Amit Shekhar**](https://amitshekhar.me), I have mentored many developers, and their efforts landed them high-paying tech jobs, helped many tech companies in solving their unique problems, and created many open-source libraries being used by top companies. I am passionate about sharing knowledge through open-source, blogs, and videos.
+Hi, I am Amit Shekhar, Co-Founder @ [Outcome School](https://outcomeschool.com) • IIT 2010-14 • I have taught and mentored many developers, and their efforts landed them high-paying tech jobs, helped many tech companies in solving their unique problems, and created many open-source libraries being used by top companies. I am passionate about sharing knowledge through open-source, blogs, and videos.
 
 You can connect with me on:
 
@@ -24,20 +24,20 @@ First, we need to learn the concepts.
 
 I have written a series of blogs on **Flow API in Kotlin**:
 
-- [Mastering Flow API in Kotlin](https://amitshekhar.me/blog/flow-api-in-kotlin)
-- [Creating Flow Using Flow Builder in Kotlin](https://amitshekhar.me/blog/creating-flow-using-flow-builder-in-kotlin)
-- [Terminal Operators in Kotlin Flow](https://amitshekhar.me/blog/terminal-operators-in-kotlin-flow)
-- [Cold Flow vs Hot Flow](https://amitshekhar.me/blog/cold-flow-vs-hot-flow)
-- [StateFlow and SharedFlow](https://amitshekhar.me/blog/stateflow-and-sharedflow)
-- [Long-running tasks in parallel with Kotlin Flow](https://amitshekhar.me/blog/long-running-tasks-in-parallel-with-kotlin-flow)
-- [Retry Operator in Kotlin Flow](https://amitshekhar.me/blog/retry-operator-in-kotlin-flow)
-- [Retrofit with Kotlin Flow](https://amitshekhar.me/blog/retrofit-with-kotlin-flow)
-- [Room Database with Kotlin Flow](https://amitshekhar.me/blog/room-database-with-kotlin-flow)
-- [Kotlin Flow Zip Operator for Parallel Multiple Network Calls](https://amitshekhar.me/blog/kotlin-flow-zip-operator-parallel-multiple-network-calls)
-- [Instant Search Using Kotlin Flow Operators](https://amitshekhar.me/blog/instant-search-using-kotlin-flow-operators)
-- [callbackFlow - Callback to Flow API in Kotlin](https://amitshekhar.me/blog/callback-to-flow-api-in-kotlin)
-- [Exception Handling in Kotlin Flow](https://amitshekhar.me/blog/exception-handling-in-kotlin-flow)
-- [Unit Testing ViewModel with Kotlin Flow and StateFlow](https://amitshekhar.me/blog/unit-testing-viewmodel-with-kotlin-flow-and-stateflow)
+- [Mastering Flow API in Kotlin](https://outcomeschool.com/blog/flow-api-in-kotlin)
+- [Creating Flow Using Flow Builder in Kotlin](https://outcomeschool.com/blog/creating-flow-using-flow-builder-in-kotlin)
+- [Terminal Operators in Kotlin Flow](https://outcomeschool.com/blog/terminal-operators-in-kotlin-flow)
+- [Cold Flow vs Hot Flow](https://outcomeschool.com/blog/cold-flow-vs-hot-flow)
+- [StateFlow and SharedFlow](https://outcomeschool.com/blog/stateflow-and-sharedflow)
+- [Long-running tasks in parallel with Kotlin Flow](https://outcomeschool.com/blog/long-running-tasks-in-parallel-with-kotlin-flow)
+- [Retry Operator in Kotlin Flow](https://outcomeschool.com/blog/retry-operator-in-kotlin-flow)
+- [Retrofit with Kotlin Flow](https://outcomeschool.com/blog/retrofit-with-kotlin-flow)
+- [Room Database with Kotlin Flow](https://outcomeschool.com/blog/room-database-with-kotlin-flow)
+- [Kotlin Flow Zip Operator for Parallel Multiple Network Calls](https://outcomeschool.com/blog/kotlin-flow-zip-operator-parallel-multiple-network-calls)
+- [Instant Search Using Kotlin Flow Operators](https://outcomeschool.com/blog/instant-search-using-kotlin-flow-operators)
+- [callbackFlow - Callback to Flow API in Kotlin](https://outcomeschool.com/blog/callback-to-flow-api-in-kotlin)
+- [Exception Handling in Kotlin Flow](https://outcomeschool.com/blog/exception-handling-in-kotlin-flow)
+- [Unit Testing ViewModel with Kotlin Flow and StateFlow](https://outcomeschool.com/blog/unit-testing-viewmodel-with-kotlin-flow-and-stateflow)
 
 Then, just clone, build, run the project and start learning Kotlin Flow by examples.
 
@@ -46,26 +46,26 @@ Then, just clone, build, run the project and start learning Kotlin Flow by examp
 * How to use Kotlin Flow in Android Project?
 * Doing simple task in background using Kotlin Flow.
 * Doing tasks in series using Kotlin Flow.
-* Doing tasks in parallel using Kotlin Flow. [Blog](https://amitshekhar.me/blog/long-running-tasks-in-parallel-with-kotlin-flow)
+* Doing tasks in parallel using Kotlin Flow. [Blog](https://outcomeschool.com/blog/long-running-tasks-in-parallel-with-kotlin-flow)
 * Making two network calls in parallel using Kotlin Flow.
 * Using operators like filter, map, reduce, flatMapConcat, zip, and etc.
 * Exception handling in Kotlin Flow
 * How to use onCompletion in Flow?
-* Retry Task using retry operator in Flow. Blog: [Retry Operator in Kotlin Flow](https://amitshekhar.me/blog/retry-operator-in-kotlin-flow)
-* Retry Task with Exponential Backoff in Flow. Blog: [Retry Operator in Kotlin Flow](https://amitshekhar.me/blog/retry-operator-in-kotlin-flow)
-* Using Kotlin Flow with Retrofit. [Blog](https://amitshekhar.me/blog/retrofit-with-kotlin-flow)
+* Retry Task using retry operator in Flow. Blog: [Retry Operator in Kotlin Flow](https://outcomeschool.com/blog/retry-operator-in-kotlin-flow)
+* Retry Task with Exponential Backoff in Flow. Blog: [Retry Operator in Kotlin Flow](https://outcomeschool.com/blog/retry-operator-in-kotlin-flow)
+* Using Kotlin Flow with Retrofit. [Blog](https://outcomeschool.com/blog/retrofit-with-kotlin-flow)
 * Using Kotlin Flow with Room
-  Database. [Blog](https://amitshekhar.me/blog/room-database-with-kotlin-flow)
+  Database. [Blog](https://outcomeschool.com/blog/room-database-with-kotlin-flow)
 * Using Kotlin Flow with various 3rd party libraries.
 * Making two network calls in parallel using Kotlin Flow.
 * Doing task in series using Kotlin Flow.
-* Writing Unit-Test for ViewModel which uses Kotlin Flow. Blog: [Unit Testing ViewModel with Kotlin Flow and StateFlow](https://amitshekhar.me/blog/unit-testing-viewmodel-with-kotlin-flow-and-stateflow)
+* Writing Unit-Test for ViewModel which uses Kotlin Flow. Blog: [Unit Testing ViewModel with Kotlin Flow and StateFlow](https://outcomeschool.com/blog/unit-testing-viewmodel-with-kotlin-flow-and-stateflow)
 
 ## Kotlin Flow Examples for Android Development: Activity and ViewModel
 
 * **Single Network Call:** Learn how to make a network call using Kotlin Flow. This is a very simple
   use-case in Android App Development.
-  Blog: [Retrofit with Kotlin Flow](https://amitshekhar.me/blog/retrofit-with-kotlin-flow)
+  Blog: [Retrofit with Kotlin Flow](https://outcomeschool.com/blog/retrofit-with-kotlin-flow)
     * [Activity Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/retrofit/single/SingleNetworkCallActivity.kt)
     * [ViewModel Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/retrofit/single/SingleNetworkCallViewModel.kt)
 
@@ -81,7 +81,7 @@ Then, just clone, build, run the project and start learning Kotlin Flow by examp
 
 * **Room Database Operation:** Learn how to fetch or insert entity in database using Kotlin Flow.
   This is useful when you are using Room Database in your Android Application.
-  Blog: [Room Database with Kotlin Flow](https://amitshekhar.me/blog/room-database-with-kotlin-flow)
+  Blog: [Room Database with Kotlin Flow](https://outcomeschool.com/blog/room-database-with-kotlin-flow)
     * [Activity Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/room/RoomDBActivity.kt)
     * [ViewModel Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/room/RoomDBViewModel.kt)
 
@@ -90,7 +90,7 @@ Then, just clone, build, run the project and start learning Kotlin Flow by examp
     * [Activity Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/task/onetask/LongRunningTaskActivity.kt)
     * [ViewModel Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/task/onetask/LongRunningTaskViewModel.kt)
 
-* **Two Long Running Tasks:** Learn how to run two long running tasks in parallel using Kotlin Flow. Blog: [Long-running tasks in parallel with Kotlin Flow](https://amitshekhar.me/blog/long-running-tasks-in-parallel-with-kotlin-flow)
+* **Two Long Running Tasks:** Learn how to run two long running tasks in parallel using Kotlin Flow. Blog: [Long-running tasks in parallel with Kotlin Flow](https://outcomeschool.com/blog/long-running-tasks-in-parallel-with-kotlin-flow)
     * [Activity Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/task/twotasks/TwoLongRunningTasksActivity.kt)
     * [ViewModel Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/task/twotasks/TwoLongRunningTasksViewModel.kt)
 
@@ -122,15 +122,15 @@ Then, just clone, build, run the project and start learning Kotlin Flow by examp
   DistinctUntilChanged, FlatMapLatest.
     * [Activity Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/search/SearchActivity.kt)
 
-* **Retry:** Blog: [Retry Operator in Kotlin Flow](https://amitshekhar.me/blog/retry-operator-in-kotlin-flow)
+* **Retry:** Blog: [Retry Operator in Kotlin Flow](https://outcomeschool.com/blog/retry-operator-in-kotlin-flow)
     * [Activity Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/retry/RetryActivity.kt)
     * [ViewModel Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/retry/RetryViewModel.kt)
 
-* **RetryWhen:** Blog: [Retry Operator in Kotlin Flow](https://amitshekhar.me/blog/retry-operator-in-kotlin-flow)
+* **RetryWhen:** Blog: [Retry Operator in Kotlin Flow](https://outcomeschool.com/blog/retry-operator-in-kotlin-flow)
     * [Activity Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/retrywhen/RetryWhenActivity.kt)
     * [ViewModel Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/retrywhen/RetryWhenViewModel.kt)
 
-* **Retry with Exponential Backoff:** Blog: [Retry Operator in Kotlin Flow](https://amitshekhar.me/blog/retry-operator-in-kotlin-flow)
+* **Retry with Exponential Backoff:** Blog: [Retry Operator in Kotlin Flow](https://outcomeschool.com/blog/retry-operator-in-kotlin-flow)
     * [Activity Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/retryexponentialbackoff/RetryExponentialBackoffActivity.kt)
     * [ViewModel Code](app/src/main/java/me/amitshekhar/learn/kotlin/flow/ui/retryexponentialbackoff/RetryExponentialBackoffModel.kt)
 
@@ -142,7 +142,7 @@ Then, just clone, build, run the project and start learning Kotlin Flow by examp
 ### License
 
 ```
-   Copyright (C) 2022 Amit Shekhar
+   Copyright (C) 2024 Amit Shekhar
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -163,7 +163,8 @@ Just make pull request. You are in!
 
 Thanks
 
-[**Amit Shekhar**](https://amitshekhar.me)
+**Amit Shekhar**\
+Co-Founder @ [Outcome School](https://outcomeschool.com)
 
 You can connect with me on:
 
@@ -172,4 +173,4 @@ You can connect with me on:
 - [GitHub](https://github.com/amitshekhariitbhu)
 - [Facebook](https://www.facebook.com/amit.shekhar.iitbhu)
 
-[**Read all of my blogs here.**](https://amitshekhar.me/blog)
+[**Read all of our blogs here.**](https://outcomeschool.com/blog)
