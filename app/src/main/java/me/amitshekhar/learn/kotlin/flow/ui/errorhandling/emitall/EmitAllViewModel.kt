@@ -31,7 +31,7 @@ class EmitAllViewModel(
                 emitAll(flowOf(emptyList()))
             }.zip(apiHelper.getUsersWithError().catch {
                 emitAll(flowOf(emptyList()))
-            }) { usersFromApi, moreUsersFromApi ->
+            }) { usersFromApi, usersFromErrorApi ->
                 val allUsersFromApi = mutableListOf<ApiUser>()
                 allUsersFromApi.addAll(usersFromApi)
                 allUsersFromApi.addAll(moreUsersFromApi)
