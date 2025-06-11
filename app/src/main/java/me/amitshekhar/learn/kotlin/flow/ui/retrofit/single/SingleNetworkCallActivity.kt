@@ -1,5 +1,6 @@
 package me.amitshekhar.learn.kotlin.flow.ui.retrofit.single
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -10,7 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_recycler_view.*
 import kotlinx.coroutines.launch
 import me.amitshekhar.learn.kotlin.flow.R
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelperImpl
@@ -18,6 +18,7 @@ import me.amitshekhar.learn.kotlin.flow.data.api.RetrofitBuilder
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseBuilder
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelperImpl
 import me.amitshekhar.learn.kotlin.flow.data.model.ApiUser
+import me.amitshekhar.learn.kotlin.flow.databinding.ActivityRecyclerViewBinding
 import me.amitshekhar.learn.kotlin.flow.ui.base.ApiUserAdapter
 import me.amitshekhar.learn.kotlin.flow.utils.DefaultDispatcherProvider
 import me.amitshekhar.learn.kotlin.flow.ui.base.UiState
@@ -27,9 +28,11 @@ class SingleNetworkCallActivity : AppCompatActivity() {
 
     private lateinit var viewModel: SingleNetworkCallViewModel
     private lateinit var adapter: ApiUserAdapter
+    private lateinit var binding: ActivityRecyclerViewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityRecyclerViewBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_recycler_view)
         setupUI()
         setupViewModel()
@@ -37,18 +40,15 @@ class SingleNetworkCallActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter =
-            ApiUserAdapter(
-                arrayListOf()
-            )
-        recyclerView.addItemDecoration(
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = ApiUserAdapter(arrayListOf())
+        binding.recyclerView.addItemDecoration(
             DividerItemDecoration(
-                recyclerView.context,
-                (recyclerView.layoutManager as LinearLayoutManager).orientation
+                binding.recyclerView.context,
+                (binding.recyclerView.layoutManager as LinearLayoutManager).orientation
             )
         )
-        recyclerView.adapter = adapter
+        binding.recyclerView.adapter = adapter
     }
 
     private fun setupObserver() {
@@ -57,17 +57,17 @@ class SingleNetworkCallActivity : AppCompatActivity() {
                 viewModel.uiState.collect {
                     when (it) {
                         is UiState.Success -> {
-                            progressBar.visibility = View.GONE
+                            binding.progressBar.visibility = View.GONE
                             renderList(it.data)
-                            recyclerView.visibility = View.VISIBLE
+                            binding.recyclerView.visibility = View.VISIBLE
                         }
                         is UiState.Loading -> {
-                            progressBar.visibility = View.VISIBLE
-                            recyclerView.visibility = View.GONE
+                            binding.progressBar.visibility = View.VISIBLE
+                            binding.recyclerView.visibility = View.GONE
                         }
                         is UiState.Error -> {
                             //Handle Error
-                            progressBar.visibility = View.GONE
+                            binding.progressBar.visibility = View.GONE
                             Toast.makeText(
                                 this@SingleNetworkCallActivity,
                                 it.message,
@@ -80,6 +80,7 @@ class SingleNetworkCallActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun renderList(users: List<ApiUser>) {
         adapter.addData(users)
         adapter.notifyDataSetChanged()
