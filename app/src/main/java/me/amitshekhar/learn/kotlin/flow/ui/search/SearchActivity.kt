@@ -2,10 +2,10 @@ package me.amitshekhar.learn.kotlin.flow.ui.search
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import me.amitshekhar.learn.kotlin.flow.R
+import me.amitshekhar.learn.kotlin.flow.databinding.ActivitySearchBinding
 import me.amitshekhar.learn.kotlin.flow.utils.DefaultDispatcherProvider
 import me.amitshekhar.learn.kotlin.flow.utils.getQueryTextChangeStateFlow
 import kotlin.coroutines.CoroutineContext
@@ -16,9 +16,11 @@ class SearchActivity : AppCompatActivity(), CoroutineScope {
         get() = Dispatchers.Main + job
 
     private lateinit var job: Job
+    private lateinit var binding: ActivitySearchBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_search)
         job = Job()
         setUpSearchStateFlow()
@@ -29,13 +31,14 @@ class SearchActivity : AppCompatActivity(), CoroutineScope {
         super.onDestroy()
     }
 
+    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
     private fun setUpSearchStateFlow() {
         launch {
-            searchView.getQueryTextChangeStateFlow()
+            binding.searchView.getQueryTextChangeStateFlow()
                 .debounce(300)
                 .filter { query ->
                     if (query.isEmpty()) {
-                        textViewResult.text = ""
+                        binding.textViewResult.text = ""
                         return@filter false
                     } else {
                         return@filter true
@@ -50,7 +53,7 @@ class SearchActivity : AppCompatActivity(), CoroutineScope {
                 }
                 .flowOn(DefaultDispatcherProvider().default)
                 .collect { result ->
-                    textViewResult.text = result
+                    binding.textViewResult.text = result
                 }
         }
     }

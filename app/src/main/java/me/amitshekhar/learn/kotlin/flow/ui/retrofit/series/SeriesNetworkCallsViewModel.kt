@@ -2,6 +2,7 @@ package me.amitshekhar.learn.kotlin.flow.ui.retrofit.series
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelper
@@ -24,6 +25,7 @@ class SeriesNetworkCallsViewModel(
         fetchUsers()
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun fetchUsers() {
         viewModelScope.launch(dispatcherProvider.main) {
             _uiState.value = UiState.Loading
