@@ -34,7 +34,7 @@ class EmitAllViewModel(
             }) { usersFromApi, usersFromErrorApi ->
                 val allUsersFromApi = mutableListOf<ApiUser>()
                 allUsersFromApi.addAll(usersFromApi)
-                allUsersFromApi.addAll(moreUsersFromApi)
+                allUsersFromApi.addAll(usersFromErrorApi)
                 return@zip allUsersFromApi
             }.flowOn(dispatcherProvider.io).catch { e ->
                 _uiState.value = UiState.Error(e.toString())
