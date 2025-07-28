@@ -11,14 +11,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_recycler_view.*
 import kotlinx.coroutines.launch
-import me.amitshekhar.learn.kotlin.flow.R
 import me.amitshekhar.learn.kotlin.flow.data.api.ApiHelperImpl
 import me.amitshekhar.learn.kotlin.flow.data.api.RetrofitBuilder
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseBuilder
 import me.amitshekhar.learn.kotlin.flow.data.local.DatabaseHelperImpl
 import me.amitshekhar.learn.kotlin.flow.data.local.entity.User
+import me.amitshekhar.learn.kotlin.flow.databinding.ActivityRecyclerViewBinding
 import me.amitshekhar.learn.kotlin.flow.ui.base.UserAdapter
 import me.amitshekhar.learn.kotlin.flow.utils.DefaultDispatcherProvider
 import me.amitshekhar.learn.kotlin.flow.ui.base.UiState
@@ -28,28 +27,30 @@ class MapActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MapViewModel
     private lateinit var adapter: UserAdapter
+    private lateinit var binding: ActivityRecyclerViewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_recycler_view)
+        binding = ActivityRecyclerViewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setupUI()
         setupViewModel()
         setupObserver()
     }
 
     private fun setupUI() {
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
         adapter =
             UserAdapter(
                 arrayListOf()
             )
-        recyclerView.addItemDecoration(
+        binding.recyclerView.addItemDecoration(
             DividerItemDecoration(
-                recyclerView.context,
-                (recyclerView.layoutManager as LinearLayoutManager).orientation
+                binding.recyclerView.context,
+                (binding.recyclerView.layoutManager as LinearLayoutManager).orientation
             )
         )
-        recyclerView.adapter = adapter
+        binding.recyclerView.adapter = adapter
     }
 
     private fun setupObserver() {
@@ -58,17 +59,17 @@ class MapActivity : AppCompatActivity() {
                 viewModel.uiState.collect {
                     when (it) {
                         is UiState.Success -> {
-                            progressBar.visibility = View.GONE
+                            binding.progressBar.visibility = View.GONE
                             renderList(it.data)
-                            recyclerView.visibility = View.VISIBLE
+                            binding.recyclerView.visibility = View.VISIBLE
                         }
                         is UiState.Loading -> {
-                            progressBar.visibility = View.VISIBLE
-                            recyclerView.visibility = View.GONE
+                            binding.progressBar.visibility = View.VISIBLE
+                            binding.recyclerView.visibility = View.GONE
                         }
                         is UiState.Error -> {
                             //Handle Error
-                            progressBar.visibility = View.GONE
+                            binding.progressBar.visibility = View.GONE
                             Toast.makeText(this@MapActivity, it.message, Toast.LENGTH_SHORT).show()
                         }
                     }

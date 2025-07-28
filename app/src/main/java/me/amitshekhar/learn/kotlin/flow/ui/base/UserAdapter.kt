@@ -1,32 +1,31 @@
 package me.amitshekhar.learn.kotlin.flow.ui.base
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.item_layout.view.*
-import me.amitshekhar.learn.kotlin.flow.R
 import me.amitshekhar.learn.kotlin.flow.data.local.entity.User
+import me.amitshekhar.learn.kotlin.flow.databinding.ItemLayoutBinding
 
 class UserAdapter(
     private val users: ArrayList<User>
 ) : RecyclerView.Adapter<UserAdapter.DataViewHolder>() {
 
-    class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class DataViewHolder(private val binding: ItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(user: User) {
-            itemView.textViewUserName.text = user.name
-            itemView.textViewUserEmail.text = user.email
-            Glide.with(itemView.imageViewAvatar.context)
+            binding.textViewUserName.text = user.name
+            binding.textViewUserEmail.text = user.email
+            Glide.with(binding.imageViewAvatar.context)
                 .load(user.avatar)
-                .into(itemView.imageViewAvatar)
+                .into(binding.imageViewAvatar)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         DataViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_layout, parent,
+            ItemLayoutBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
                 false
             )
         )
