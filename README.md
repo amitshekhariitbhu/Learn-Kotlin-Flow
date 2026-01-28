@@ -155,7 +155,7 @@ Then, just clone, build, run the project and start learning Kotlin Flow by examp
 ### License
 
 ```
-   Copyright (C) 2024 Amit Shekhar
+   Copyright (C) 2026 Amit Shekhar
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -173,17 +173,3 @@ Then, just clone, build, run the project and start learning Kotlin Flow by examp
 ### Contributing to Learn Kotlin Flow
 
 Just make pull request. You are in!
-
-Thanks
-
-**Amit Shekhar**\
-Co-Founder @ [Outcome School](https://outcomeschool.com)
-
-You can connect with me on:
-
-- [Twitter](https://twitter.com/amitiitbhu)
-- [LinkedIn](https://www.linkedin.com/in/amit-shekhar-iitbhu)
-- [GitHub](https://github.com/amitshekhariitbhu)
-- [Facebook](https://www.facebook.com/amit.shekhar.iitbhu)
-
-[**Read all of our blogs here.**](https://outcomeschool.com/blog)
